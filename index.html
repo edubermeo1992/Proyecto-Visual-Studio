@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Evaluación Académica Docente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tabla-matriz th {
+            font-size: 11px;
+            line-height: 1.2;
+            padding: 8px 4px;
+            font-weight: 600;
+        }
+        .opcion-likert {
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1px 4px;
+        }
+        .opcion-likert:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen">
+
+    <nav class="bg-indigo-900 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-xl font-bold tracking-wide">Sistema de Evaluación Docente</h1>
+        <div class="flex items-center gap-3">
+            <span class="text-sm text-indigo-200">Rol Actual:</span>
+            <select id="roleSelector" onchange="solicitarAccesoRol(this.value)" class="bg-indigo-800 text-white border border-indigo-700 rounded px-2 py-1 text-sm focus:outline-none">
+                <option value="estudiante" selected>Estudiante / Alumno</option>
+                <option value="admin">Administrador</option>
+            </select>
+        </div>
+    </nav>
+
+    <div class="max-w-[98%] mx-auto p-4 md:p-6">
+
+        <section id="vista-login-admin" class="role-view hidden max-w-md mx-auto my-12">
+            <div class="bg-white rounded-lg shadow-lg p-8 border-t-4 border-indigo-900">
+                <div class="text-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wide">Control de Acceso Admin</h2>
+                    <p class="text-xs text-gray-500">Ingrese sus credenciales administrativas</p>
+                </div>
+                <form onsubmit="autenticarAdministrador(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Usuario Admin:</label>
+                        <input type="text" id="loginAdminUsuario" required placeholder="Ingrese su usuario asignado" class="w-full p-2.5 border border-gray-300 rounded text-sm focus:ring focus:ring-indigo-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña:</label>
+                        <input type="password" id="loginAdminPassword" required placeholder="••••••••" class="w-full p-2.5 border border-gray-300 rounded text-sm focus:ring focus:ring-indigo-200">
+                    </div>
+                    <div id="errorLoginAdmin" class="hidden text-xs text-red-600 font-semibold bg-red-50 p-2 rounded border border-red-200">
+                        ⚠️ Credenciales administrativas incorrectas.
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="cancelarLoginAdmin()" class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 rounded text-sm transition">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="w-1/2 bg-indigo-900 hover:bg-indigo-950 text-white font-semibold py-2 rounded text-sm transition shadow">
+                            Ingresar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="vista-login-estudiante" class="role-view block max-w-md mx-auto my-12">
+            <div class="bg-white rounded-lg shadow-lg p-8 border-t-4 border-indigo-900">
+                <div class="text-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wide">Portal del Estudiante</h2>
+                    <p class="text-xs text-gray-500">Ingrese con su número de cédula y contraseña asignada</p>
+                </div>
+                <form onsubmit="autenticarEstudiante(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Usuario (Cédula):</label>
+                        <input type="text" id="loginEstuCedula" required placeholder="Ej. 1700000000" class="w-full p-2.5 border border-gray-300 rounded text-sm focus:ring focus:ring-indigo-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña:</label>
+                        <input type="password" id="loginEstuPassword" required placeholder="••••••••" class="w-full p-2.5 border border-gray-300 rounded text-sm focus:ring focus:ring-indigo-200">
+                    </div>
+                    <div id="errorLoginEstu" class="hidden text-xs text-red-600 font-semibold bg-red-50 p-2 rounded border border-red-200">
+                        ⚠️ Credenciales incorrectas o el estudiante no está registrado.
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-semibold py-2.5 rounded text-sm transition shadow uppercase tracking-wider">
+                        Ingresar al Sistema
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="vista-cambio-password" class="role-view hidden max-w-md mx-auto my-12">
+            <div class="bg-white rounded-lg shadow-lg p-8 border-t-4 border-amber-500">
+                <div class="text-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wide">Actualizar Contraseña</h2>
+                    <p class="text-xs text-amber-700 font-medium bg-amber-50 p-2 rounded border border-amber-200 mt-2">
+                        Por razones de seguridad, debe cambiar la contraseña temporal provista por el administrador antes de continuar.
+                    </p>
+                </div>
+                <form onsubmit="procesarCambioContrasena(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nueva Contraseña:</label>
+                        <input type="password" id="nuevaPassword" required minlength="6" placeholder="Mínimo 6 caracteres" class="w-full p-2.5 border border-gray-300 rounded text-sm focus:ring focus:ring-amber-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Confirmar Nueva Contraseña:</label>
+                        <input type="password" id="confirmarNuevaPassword" required minlength="6" placeholder="Repita la contraseña" class="w-full p-2.5 border border-gray-300 rounded text-sm focus:ring focus:ring-amber-200">
+                    </div>
+                    <div id="errorCambioPassword" class="hidden text-xs text-red-600 font-semibold bg-red-50 p-2 rounded border border-red-200">
+                        ⚠️ Las contraseñas no coinciden.
+                    </div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded text-sm transition shadow uppercase tracking-wider">
+                        Guardar y Continuar
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="vista-estudiante-panel" class="role-view hidden">
+            <div class="bg-white rounded-lg shadow p-6 mb-6 border-t-4 border-indigo-900">
+                <div class="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-4 mb-6 gap-4">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-2xl font-bold text-gray-800 uppercase tracking-wider">Evaluación Académica Docente</h2>
+                        <p class="text-sm text-gray-500 font-medium">Bienvenido(a): <span id="nombreEstudianteActivo" class="font-bold text-indigo-900"></span></p>
+                    </div>
+                    <button onclick="cerrarSesionEstudiante()" class="bg-gray-600 hover:bg-gray-700 text-white text-xs font-bold py-2 px-4 rounded shadow transition">
+                        🔒 Cerrar Sesión Estudiante
+                    </button>
+                </div>
+
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start mb-6">
+                    <button type="button" onclick="seleccionarAreaEstudiante('Subdirección')" id="btnAreaSub" class="flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300">
+                        Subdirección
+                    </button>
+                    <button type="button" onclick="seleccionarAreaEstudiante('Gestión académica')" id="btnAreaGest" class="flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300">
+                        Gestión Académica
+                    </button>
+                </div>
+
+                <div id="alertaFechaBloqueo" class="hidden mb-6 p-4 rounded-lg border text-center font-medium">
+                    <p id="mensajeAlertaFecha"></p>
+                </div>
+
+                <form id="evalForm" onsubmit="guardarEvaluacionMatriz(event)" class="hidden space-y-6">
+                    <div class="bg-indigo-50 p-3 rounded border border-indigo-200 text-xs font-bold text-indigo-900 uppercase">
+                        Evaluando Área: <span id="areaSeleccionadaBadge"></span> | Curso: <span id="cursoEstudianteBadge"></span>
+                    </div>
+                    <div class="border border-gray-300 rounded-lg overflow-x-auto shadow-sm">
+                        <table class="w-full text-left border-collapse bg-white table-fixed min-w-[1400px] tabla-matriz">
+                            <thead>
+                                <tr class="bg-indigo-900 text-white text-center">
+                                    <th colspan="4" class="border border-indigo-950 p-2 text-xs uppercase tracking-wider">Información Académica</th>
+                                    <th colspan="8" class="border border-indigo-950 p-2 text-xs uppercase tracking-wider">Matriz Institutional de Evaluación Docente</th>
+                                </tr>
+                                <tr class="bg-gray-200 text-gray-800 border-b border-gray-300">
+                                    <th class="w-[120px] border border-gray-300 p-2">Asignatura</th>
+                                    <th class="w-[80px] border border-gray-300 p-2">Grado</th>
+                                    <th class="w-[90px] border border-gray-300 p-2">Cédula</th>
+                                    <th class="w-[180px] border border-gray-300 p-2">Nombre del Docente</th>
+                                    
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Demuestra compromiso con la enseñanza a través de la puntualidad, la responsabilidad y el respeto hacia estudiantes...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Organiza la clase de manera eficiente, respetando el cronograma y el tiempo asignado...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Demuestra un conocimiento profundo y actualizado del contenido temático...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Diseña instrumentos de evaluación alineados con los objetivos de aprendizaje...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Se expresa con claridad y precisión, utilizando un lenguaje técnico adecuado...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Fomenta un ambiente participativo y de respeto. Gestiona eficazmente...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Utiliza metodologías activas e innovadoras acordes al contexto y perfil...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Integra de manera efectiva las TICs para el desarrollo del proceso...</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoMatrizEstudiante" class="divide-y divide-gray-300">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-lg transition shadow-md uppercase text-sm tracking-wider">
+                            Enviar Evaluación Completa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="vista-admin" class="role-view hidden space-y-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-red-600 lg:col-span-2">
+                    <div class="flex justify-between items-center mb-2">
+                        <h2 class="text-xl font-semibold text-gray-800">Configuración de Fechas de Habilitación</h2>
+                        <button onclick="cerrarSesionAdmin()" class="bg-gray-600 hover:bg-gray-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow transition md:hidden">🔒 Salir</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-4">Defina los rangos de tiempo permitidos para que los estudiantes realicen la evaluación en cada área.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                            <h3 class="text-xs font-bold text-indigo-900 mb-2 uppercase">Área Subdirección</h3>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-[10px] font-medium text-gray-600">Inicio:</label>
+                                    <input type="datetime-local" id="fechaInicioSub" class="w-full p-1.5 border border-gray-300 rounded text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-medium text-gray-600">Cierre:</label>
+                                    <input type="datetime-local" id="fechaFinSub" class="w-full p-1.5 border border-gray-300 rounded text-xs">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                            <h3 class="text-xs font-bold text-indigo-900 mb-2 uppercase">Área Gestión Académica</h3>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-[10px] font-medium text-gray-600">Inicio:</label>
+                                    <input type="datetime-local" id="fechaInicioGest" class="w-full p-1.5 border border-gray-300 rounded text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-medium text-gray-600">Cierre:</label>
+                                    <input type="datetime-local" id="fechaFinGest" class="w-full p-1.5 border border-gray-300 rounded text-xs">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right mt-3">
+                        <button onclick="guardarFechasHabilitacion()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-4 rounded shadow transition text-xs">
+                            💾 Guardar Cronograma
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-slate-700">
+                    <div class="flex justify-between items-center mb-1">
+                        <h2 class="text-base font-bold text-gray-800 uppercase tracking-wide">Mi Cuenta Admin Principal</h2>
+                        <button onclick="cerrarSesionAdmin()" class="hidden md:block bg-gray-600 hover:bg-gray-700 text-white text-[10px] font-bold py-1 px-2 rounded shadow transition">🔒 Cerrar Sesión</button>
+                    </div>
+                    <p class="text-[11px] text-gray-500 mb-3">Modifique sus credenciales de acceso personales.</p>
+                    
+                    <form onsubmit="actualizarCredencialesAdmin(event)" class="space-y-2.5">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase">Mi Usuario Actual:</label>
+                            <input type="text" id="nuevoAdminUser" required class="w-full p-1.5 text-xs border border-gray-300 rounded bg-gray-50 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase">Nueva Contraseña:</label>
+                            <input type="password" id="nuevoAdminPass" required minlength="6" placeholder="Mínimo 6 caracteres" class="w-full p-1.5 text-xs border border-gray-300 rounded bg-gray-50">
+                        </div>
+                        <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-1.5 rounded text-xs transition shadow uppercase tracking-wide">
+                            Actualizar Mis Datos
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-cyan-700">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Gestión de Administradores Adicionales</h2>
+                <p class="text-xs text-gray-500 mb-4">Autorice cuentas adicionales e independientes con privilegios administrativos para gestionar la plataforma.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 shadow-sm">
+                        <h3 class="text-xs font-bold text-cyan-900 mb-3 uppercase tracking-wider">Crear Cuenta de Co-Administrador</h3>
+                        <form onsubmit="registrarAdminAdicional(event)" class="space-y-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-700">Nombre / Identificador:</label>
+                                <input type="text" id="addAdminNombre" required placeholder="Ej. Admin Soporte" class="w-full p-2 text-xs border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-700">Usuario de Acceso:</label>
+                                <input type="text" id="addAdminUser" required placeholder="Ej. auxiliar_moodle" class="w-full p-2 text-xs border border-gray-300 rounded font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-gray-700">Contraseña:</label>
+                                <input type="password" id="addAdminPass" required minlength="6" placeholder="Mínimo 6 caracteres" class="w-full p-2 text-xs border border-gray-300 rounded">
+                            </div>
+                            <button type="submit" class="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-bold py-2 rounded text-xs transition shadow uppercase tracking-wide">
+                                + Habilitar Administrador
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="lg:col-span-2 overflow-hidden">
+                        <h3 class="text-xs font-bold text-gray-700 mb-3 uppercase tracking-wider">Nómina de Cuentas Administrativas Activas</h3>
+                        <div class="overflow-x-auto max-h-[220px] border border-gray-200 rounded">
+                            <table class="w-full text-left text-xs border-collapse bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100 border-b border-gray-300 text-gray-700 uppercase font-semibold">
+                                        <th class="p-2 border border-gray-200">Tipo de Cuenta</th>
+                                        <th class="p-2 border border-gray-200">Nombre / Detalle</th>
+                                        <th class="p-2 border border-gray-200 font-mono">Usuario</th>
+                                        <th class="p-2 border border-gray-200 text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaAdminCuentas" class="divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-indigo-600 lg:col-span-2">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Cargar Nuevo Docente</h2>
+                    <form id="docenteForm" onsubmit="agregarNuevoDocente(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Área correspondiente:</label>
+                            <select id="newDocenteArea" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                                <option value="Subdirección">Subdirección</option>
+                                <option value="Gestión académica">Gestión Académica</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Cédula del Docente:</label>
+                            <input type="text" id="newDocenteCedula" required placeholder="Ej. 1712345678" pattern="[0-9]{10}" class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Grado:</label>
+                            <select id="newDocenteGrado" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                                <option value="Coronel">Coronel</option>
+                                <option value="Teniente Coronel">Teniente Coronel</option>
+                                <option value="Mayor">Mayor</option>
+                                <option value="Capitán">Capitán</option>
+                                <option value="Teniente">Teniente</option>
+                                <option value="Subteniente">Subteniente</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombres y Apellidos:</label>
+                            <input type="text" id="newDocenteNombre" required placeholder="Ej. Alfonso Javier Altamirano" class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Curso / Promoción Asignado:</label>
+                            <select id="newDocenteCurso" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Asignatura / Materia:</label>
+                            <input type="text" id="newDocenteAsignatura" required placeholder="Ej. Doctrina Policial" class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Paralelo:</label>
+                            <input type="text" id="newDocenteParalelo" required placeholder="Ej. A" class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
+                        </div>
+                        <div class="text-right pt-6">
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded shadow transition w-full">
+                                + Cargar Docente
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-amber-500">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">Gestión de Cursos / Promociones</h2>
+                    <p class="text-xs text-gray-500 mb-4">Agregue o elimine los cursos disponibles en el sistema.</p>
+                    
+                    <form id="cursoForm" onsubmit="agregarCurso(event)" class="flex gap-2 mb-4">
+                        <input type="text" id="newCursoNombre" required placeholder="Ej. Curso de ascenso Subteniente P.P." class="w-full p-2 text-sm border border-gray-300 rounded focus:ring focus:ring-amber-200">
+                        <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 rounded text-sm transition">
+                            +Añadir
+                        </button>
+                    </form>
+
+                    <div class="max-h-[180px] overflow-y-auto border border-gray-200 rounded">
+                        <ul id="listaCursosAdmin" class="divide-y divide-gray-200 text-sm">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-emerald-600 lg:col-span-1">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">Matricular Estudiante</h2>
+                    <p class="text-xs text-gray-500 mb-4">Genere cuentas de estudiantes con clave temporal de primer ingreso.</p>
+                    <form id="estudianteMatriculaForm" onsubmit="matricularEstudiante(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700">Cédula (Usuario):</label>
+                            <input type="text" id="matEstuCedula" required placeholder="Ej. 1755443322" pattern="[0-9]{10}" class="w-full p-2 text-xs border border-gray-300 rounded">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700">Nombres Completos:</label>
+                            <input type="text" id="matEstuNombre" required placeholder="Ej. Juan Carlos López" class="w-full p-2 text-xs border border-gray-300 rounded">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700">Curso / Promoción:</label>
+                            <select id="matEstuCurso" required class="w-full p-2 text-xs border border-gray-300 rounded"></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700">Contraseña Temporal:</label>
+                            <input type="text" id="matEstuPassword" required placeholder="Ej. EvalTemp2026" class="w-full p-2 text-xs border border-gray-300 rounded font-mono bg-amber-50">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded text-xs transition shadow">
+                            + Matricular Alumno
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6 lg:col-span-2 overflow-hidden">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">Nómina de Estudiantes Matriculados</h2>
+                    <p class="text-xs text-gray-500 mb-4">Lista completa de alumnos cargados al ecosistema.</p>
+                    <div class="overflow-x-auto max-h-[300px]">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100 border-b border-gray-300 text-gray-700 uppercase">
+                                    <th class="p-2 border border-gray-200">Cédula</th>
+                                    <th class="p-2 border border-gray-200">Nombres</th>
+                                    <th class="p-2 border border-gray-200">Curso</th>
+                                    <th class="p-2 border border-gray-200 text-center">Estado Clave</th>
+                                    <th class="p-2 border border-gray-200 text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nominaEstudiantesAdmin" class="divide-y divide-gray-200"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-semibold text-gray-800">Docentes Registrados y Control de Calificaciones</h2>
+                        <p class="text-gray-600 text-sm">Monitoreo global del promedio porcentual y nota global por docente y área.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="eliminarDocentesMasivo()" class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition">
+                            🗑️ Eliminar Seleccionados
+                        </button>
+                        <button onclick="descargarExcelCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition">
+                            📊 Descargar Reporte Excel (.csv)
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-800 text-white text-xs uppercase tracking-wider">
+                                <th class="p-3 border border-gray-700 text-center w-[50px]">
+                                    <input type="checkbox" id="checkMasivoMaestro" onclick="seleccionarTodosDocentes(this.checked)" class="w-4 h-4 text-indigo-600 rounded focus:ring-0 cursor-pointer">
+                                </th>
+                                <th class="p-3 border border-gray-700">Área</th>
+                                <th class="p-3 border border-gray-700">Cédula Docente</th>
+                                <th class="p-3 border border-gray-700">Grado</th>
+                                <th class="p-3 border border-gray-700">Docente</th>
+                                <th class="p-3 border border-gray-700">Curso / Promoción</th>
+                                <th class="p-3 border border-gray-700">Asignatura</th>
+                                <th class="p-3 border border-gray-700 text-center">Par.</th>
+                                <th class="p-3 border border-gray-700 text-center bg-indigo-950 text-indigo-300">N° Eval.</th>
+                                <th class="p-3 border border-gray-700 text-center bg-indigo-900 text-yellow-400">Promedio %</th>
+                                <th class="p-3 border border-gray-700 text-center bg-indigo-950 text-green-400">Nota Final (/7)</th>
+                                <th class="p-3 border border-gray-700 text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaAdminDocentes" class="divide-y divide-gray-200 text-sm text-gray-700">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let areaSeleccionadaEstudiante = "";
+        let isAdminAutenticado = false; 
+        let estudianteSesionActiva = null; 
+
+        const opcionesLikert = [
+            { texto: "Excelente", valor: 5 },
+            { texto: "Bueno", valor: 4 },
+            { texto: "Regular", valor: 3 },
+            { texto: "Deficiente", valor: 2 },
+            { texto: "Muy Deficiente", valor: 1 }
+        ];
+
+        // Inicialización de LocalStorage y Credenciales Maestras por defecto
+        if (!localStorage.getItem('adminCredenciales')) {
+            localStorage.setItem('adminCredenciales', JSON.stringify({
+                usuario: "0202382636",
+                password: "AdmiMoodle2026"
+            }));
+        }
+        // Repositorio de Administradores adicionales
+        if (!localStorage.getItem('adminsAdicionales')) {
+            localStorage.setItem('adminsAdicionales', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('cursos')) {
+            const cursosIniciales = [
+                "Curso de ascenso Capitán de Servicio",
+                "Curso de ascenso Teniente de Servicios",
+                "Curso de ascenso Subteniente P.P."
+            ];
+            localStorage.setItem('cursos', JSON.stringify(cursosIniciales));
+        }
+        if (!localStorage.getItem('docentes')) localStorage.setItem('docentes', JSON.stringify([]));
+        if (!localStorage.getItem('estudiantes')) localStorage.setItem('estudiantes', JSON.stringify([]));
+        if (!localStorage.getItem('evaluaciones')) localStorage.setItem('evaluaciones', JSON.stringify([]));
+        if (!localStorage.getItem('fechasHabilitacion')) {
+            localStorage.setItem('fechasHabilitacion', JSON.stringify({
+                subdirección: { inicio: "", fin: "" },
+                gestiónAcadémica: { inicio: "", fin: "" }
+            }));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            actualizarVistas();
+            cargarFechasEnAdmin();
+            cargarInputsCredencialesAdmin();
+        });
+
+        // ==================== LÓGICA DE ROLES Y RENDERIZADO ====================
+        function solicitarAccesoRol(rol) {
+            if (rol === 'admin') {
+                if (isAdminAutenticado) {
+                    mostrarSeccion('vista-admin');
+                } else {
+                    document.getElementById("loginAdminUsuario").value = "";
+                    document.getElementById("loginAdminPassword").value = "";
+                    document.getElementById("errorLoginAdmin").classList.add("hidden");
+                    mostrarSeccion('vista-login-admin');
+                }
+            } else {
+                if (estudianteSesionActiva) {
+                    mostrarSeccion('vista-estudiante-panel');
+                } else {
+                    mostrarSeccion('vista-login-estudiante');
+                }
+            }
+        }
+
+        function mostrarSeccion(idSeccion) {
+            document.querySelectorAll('.role-view').forEach(view => view.classList.add('hidden'));
+            document.getElementById(idSeccion).classList.remove('hidden');
+            actualizarVistas();
+        }
+
+        // ==================== ACCESOS / SEGURIDAD DEL ADMINISTRADOR ====================
+        function autenticarAdministrador(e) {
+            e.preventDefault();
+            const usuarioInput = document.getElementById("loginAdminUsuario").value.trim();
+            const contrasenaInput = document.getElementById("loginAdminPassword").value;
+
+            // 1. Verificar contra el Admin Maestro Principal
+            const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
+            let accesoConcedido = (usuarioInput === credsMaestras.usuario && contrasenaInput === credsMaestras.password);
+
+            // 2. Si no es el maestro, verificar en administradores adicionales
+            if (!accesoConcedido) {
+                const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
+                const subAdmin = adminsAdicionales.find(a => a.usuario === usuarioInput && a.password === contrasenaInput);
+                if (subAdmin) {
+                    accesoConcedido = true;
+                }
+            }
+
+            if (accesoConcedido) {
+                isAdminAutenticado = true;
+                document.getElementById("errorLoginAdmin").classList.add("hidden");
+                mostrarSeccion('vista-admin');
+            } else {
+                isAdminAutenticado = false;
+                document.getElementById("errorLoginAdmin").classList.remove("hidden");
+            }
+        }
+
+        function cargarInputsCredencialesAdmin() {
+            const creds = JSON.parse(localStorage.getItem('adminCredenciales'));
+            document.getElementById("nuevoAdminUser").value = creds.usuario;
+            document.getElementById("nuevoAdminPass").value = creds.password;
+        }
+
+        function actualizarCredencialesAdmin(e) {
+            e.preventDefault();
+            const nuevoUser = document.getElementById("nuevoAdminUser").value.trim();
+            const nuevoPass = document.getElementById("nuevoAdminPass").value;
+
+            if(!nuevoUser || nuevoPass.length < 6) {
+                alert("Por favor ingrese parámetros válidos (Contraseña mínima de 6 caracteres).");
+                return;
+            }
+
+            // Evitar colisión con usuarios de administradores adicionales
+            const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
+            if (adminsAdicionales.some(a => a.usuario === nuevoUser)) {
+                alert("Este usuario ya está asignado a un administrador adicional. Elija otro diferente.");
+                return;
+            }
+
+            const nuevasCreds = { usuario: nuevoUser, password: nuevoPass };
+            localStorage.setItem('adminCredenciales', JSON.stringify(nuevasCreds));
+            alert("🔒 Tus credenciales principales han sido actualizadas con éxito.");
+            cargarInputsCredencialesAdmin();
+            actualizarVistas();
+        }
+
+        // ==================== GESTIÓN DE ADMINISTRADORES ADICIONALES ====================
+        function registrarAdminAdicional(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("addAdminNombre").value.trim();
+            const usuario = document.getElementById("addAdminUser").value.trim();
+            const password = document.getElementById("addAdminPass").value;
+
+            if (!nombre || !usuario || password.length < 6) {
+                alert("Complete los datos de forma correcta. La contraseña requiere mínimo 6 caracteres.");
+                return;
+            }
+
+            const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
+            const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
+
+            // Validar que no se repita con el admin principal ni con otros co-admins
+            if (usuario === credsMaestras.usuario || adminsAdicionales.some(a => a.usuario === usuario)) {
+                alert("El nombre de usuario ya se encuentra registrado en el sistema. Ingrese uno diferente.");
+                return;
+            }
+
+            adminsAdicionales.push({ id: "ADM-" + Date.now(), nombre, usuario, password });
+            localStorage.setItem('adminsAdicionales', JSON.stringify(adminsAdicionales));
+            
+            alert(`✅ El Administrador Adicional "${nombre}" ha sido habilitado con éxito.`);
+            document.getElementById("addAdminNombre").value = "";
+            document.getElementById("addAdminUser").value = "";
+            document.getElementById("addAdminPass").value = "";
+            
+            actualizarVistas();
+        }
+
+        function removerAdminAdicional(idAdmin) {
+            if (confirm("¿Está seguro que desea revocar los privilegios de acceso para esta cuenta administrativa?")) {
+                let adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
+                adminsAdicionales = adminsAdicionales.filter(a => a.id !== idAdmin);
+                localStorage.setItem('adminsAdicionales', JSON.stringify(adminsAdicionales));
+                actualizarVistas();
+            }
+        }
+
+        function cancelarLoginAdmin() {
+            document.getElementById("roleSelector").value = "estudiante";
+            solicitarAccesoRol("estudiante");
+        }
+
+        function cerrarSesionAdmin() {
+            isAdminAutenticado = false;
+            document.getElementById("roleSelector").value = "estudiante";
+            alert("Sesión de administrador cerrada.");
+            solicitarAccesoRol("estudiante");
+        }
+
+        // ==================== AUTENTICACIÓN ESTUDIANTE ====================
+        function autenticarEstudiante(e) {
+            e.preventDefault();
+            const cedula = document.getElementById("loginEstuCedula").value.trim();
+            const password = document.getElementById("loginEstuPassword").value;
+
+            const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
+            const estu = estudiantes.find(e => e.cedula === cedula && e.password === password);
+
+            if (estu) {
+                document.getElementById("errorLoginEstu").classList.add("hidden");
+                estudianteSesionActiva = estu;
+                
+                if (estu.esTemporal) {
+                    document.getElementById("nuevaPassword").value = "";
+                    document.getElementById("confirmarNuevaPassword").value = "";
+                    document.getElementById("errorCambioPassword").classList.add("hidden");
+                    mostrarSeccion('vista-cambio-password');
+                } else {
+                    document.getElementById("nombreEstudianteActivo").innerText = estu.nombre;
+                    document.getElementById("cursoEstudianteBadge").innerText = estu.curso;
+                    mostrarSeccion('vista-estudiante-panel');
+                }
+            } else {
+                document.getElementById("errorLoginEstu").classList.remove("hidden");
+            }
+        }
+
+        function procesarCambioContrasena(e) {
+            e.preventDefault();
+            const nueva = document.getElementById("nuevaPassword").value;
+            const confirma = document.getElementById("confirmarNuevaPassword").value;
+
+            if (nueva !== confirma) {
+                document.getElementById("errorCambioPassword").classList.remove("hidden");
+                return;
+            }
+
+            let estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
+            estudiantes = estudiantes.map(estu => {
+                if (estu.cedula === estudianteSesionActiva.cedula) {
+                    estu.password = nueva;
+                    estu.esTemporal = false; 
+                    estudianteSesionActiva = estu; 
+                }
+                return estu;
+            });
+
+            localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
+            alert("Contraseña actualizada correctamente. ¡Ya puede proceder con su evaluación!");
+            
+            document.getElementById("nombreEstudianteActivo").innerText = estudianteSesionActiva.nombre;
+            document.getElementById("cursoEstudianteBadge").innerText = estudianteSesionActiva.curso;
+            mostrarSeccion('vista-estudiante-panel');
+        }
+
+        function cerrarSesionEstudiante() {
+            estudianteSesionActiva = null;
+            document.getElementById("loginEstuCedula").value = "";
+            document.getElementById("loginEstuPassword").value = "";
+            mostrarSeccion('vista-login-estudiante');
+        }
+
+        // ==================== MATRICULACIÓN DE ESTUDIANTES ====================
+        function matricularEstudiante(e) {
+            e.preventDefault();
+            const cedula = document.getElementById("matEstuCedula").value.trim();
+            const fontNombre = document.getElementById("matEstuNombre").value.trim();
+            const curso = document.getElementById("matEstuCurso").value;
+            const password = document.getElementById("matEstuPassword").value;
+
+            const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
+            if (estudiantes.some(e => e.cedula === cedula)) {
+                alert("Esta cédula ya se encuentra registrada como estudiante.");
+                return;
+            }
+
+            estudiantes.push({
+                cedula,
+                nombre: fontNombre,
+                curso,
+                password,
+                esTemporal: true 
+            });
+
+            localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
+            alert("Estudiante matriculado con éxito.");
+            document.getElementById("estudianteMatriculaForm").reset();
+            actualizarVistas();
+        }
+
+        function desmatricularEstudiante(cedula) {
+            if (confirm(`¿Desea eliminar de la nómina al estudiante con cédula ${cedula}?`)) {
+                let estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
+                estudiantes = estudiantes.filter(e => e.cedula !== cedula);
+                localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
+                actualizarVistas();
+            }
+        }
+
+        // ==================== LÓGICA DE CRONOGRAMAS Y EVALUACIÓN ====================
+        function cargarFechasEnAdmin() {
+            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
+            if(fechas) {
+                document.getElementById("fechaInicioSub").value = fechas.subdirección.inicio || "";
+                document.getElementById("fechaFinSub").value = fechas.subdirección.fin || "";
+                document.getElementById("fechaInicioGest").value = fechas.gestiónAcadémica.inicio || "";
+                document.getElementById("fechaFinGest").value = fechas.gestiónAcadémica.fin || "";
+            }
+        }
+
+        function guardarFechasHabilitacion() {
+            const fechas = {
+                subdirección: {
+                    inicio: document.getElementById("fechaInicioSub").value,
+                    fin: document.getElementById("fechaFinSub").value
+                },
+                gestiónAcadémica: {
+                    inicio: document.getElementById("fechaInicioGest").value,
+                    fin: document.getElementById("fechaFinGest").value
+                }
+            };
+            localStorage.setItem('fechasHabilitacion', JSON.stringify(fechas));
+            alert("Cronograma de habilitación temporal guardado con éxito.");
+        }
+
+        function verificarHabilitacionArea(area) {
+            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
+            const ahora = new Date();
+            
+            const llaveArea = area === 'Subdirección' ? 'subdirección' : 'gestiónAcadémica';
+            const configuracion = fechas[llaveArea];
+
+            const alertaBloqueo = document.getElementById("alertaFechaBloqueo");
+            const mensajeAlerta = document.getElementById("mensajeAlertaFecha");
+            const evalForm = document.getElementById("evalForm");
+
+            if (!configuracion.inicio || !configuracion.fin) {
+                alertaBloqueo.classList.add("hidden");
+                return true;
+            }
+
+            const fechaInicio = new Date(configuracion.inicio);
+            const fechaFin = new Date(configuracion.fin);
+
+            if (ahora < fechaInicio) {
+                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-amber-50 border-amber-300 text-amber-800";
+                mensajeAlerta.innerHTML = `⚠️ El proceso de evaluación para el área de <strong>${area}</strong> aún no se encuentra habilitado.<br><small>Disponible desde: ${fechaInicio.toLocaleString()}</small>`;
+                alertaBloqueo.classList.remove("hidden");
+                evalForm.classList.add("hidden");
+                return false;
+            } else if (ahora > fechaFin) {
+                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-red-50 border-red-300 text-red-800";
+                mensajeAlerta.innerHTML = `🛑 El tiempo límite para evaluar el área de <strong>${area}</strong> ha finalizado el ${fechaFin.toLocaleString()}.`;
+                alertaBloqueo.classList.remove("hidden");
+                evalForm.classList.add("hidden");
+                return false;
+            }
+
+            alertaBloqueo.classList.add("hidden");
+            return true;
+        }
+
+        function seleccionarAreaEstudiante(area) {
+            areaSeleccionadaEstudiante = area;
+            
+            const btnSub = document.getElementById("btnAreaSub");
+            const btnGest = document.getElementById("btnAreaGest");
+            
+            if(area === 'Subdirección') {
+                btnSub.className = "flex-1 md:flex-none bg-indigo-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-200 text-center uppercase tracking-wide border border-indigo-950";
+                btnGest.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+            } else {
+                btnGest.className = "flex-1 md:flex-none bg-indigo-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-200 text-center uppercase tracking-wide border border-indigo-950";
+                btnSub.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+            }
+
+            const habilitado = verificarHabilitacionArea(area);
+            if (habilitado) {
+                document.getElementById("areaSeleccionadaBadge").innerText = area.toUpperCase();
+                generarMatrizEvaluacion(estudianteSesionActiva.curso);
+            }
+        }
+
+        function generarMatrizEvaluacion(cursoSeleccionado) {
+            const form = document.getElementById("evalForm");
+            const cuerpo = document.getElementById("cuerpoMatrizEstudiante");
+            cuerpo.innerHTML = "";
+
+            if (!cursoSeleccionado || !areaSeleccionadaEstudiante) {
+                form.classList.add("hidden");
+                return;
+            }
+
+            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+            const docentesFiltrados = listaDocentes.filter(d => d.curso === cursoSeleccionado && d.area === areaSeleccionadaEstudiante);
+
+            if (docentesFiltrados.length === 0) {
+                cuerpo.innerHTML = `<tr><td colspan="12" class="p-4 text-center text-red-500 font-bold">No existen docentes registrados bajo el área de ${areaSeleccionadaEstudiante} para este curso.</td></tr>`;
+                form.classList.remove("hidden");
+                return;
+            }
+
+            docentesFiltrados.forEach((doc) => {
+                let fila = document.createElement("tr");
+                fila.className = "align-middle border-b border-gray-300";
+
+                let htmlDatosBase = `
+                    <td class="p-2 border border-gray-300 bg-amber-50 font-medium text-xs text-amber-950">${doc.asignatura}</td>
+                    <td class="p-2 border border-gray-300 text-xs text-center">${doc.grado}</td>
+                    <td class="p-2 border border-gray-300 text-xs font-mono">${doc.cedula}</td>
+                    <td class="p-2 border border-gray-300 font-medium text-xs">${doc.nombre} <span class="text-gray-400 text-[10px]">(${doc.paralelo})</span></td>
+                `;
+
+                let htmlCriterios = "";
+                for (let c = 1; c <= 8; c++) {
+                    htmlCriterios += `<td class="p-1 border border-gray-300 bg-white">`;
+                    opcionesLikert.forEach(op => {
+                        htmlCriterios += `
+                            <label class="opcion-likert cursor-pointer">
+                                <span class="text-gray-600">${op.texto}</span>
+                                <input type="radio" name="doc_${doc.id}_crit_${c}" value="${op.valor}" required class="w-3 h-3 text-blue-600 focus:ring-0">
+                            </label>
+                        `;
+                    });
+                    htmlCriterios += `</td>`;
+                }
+
+                fila.innerHTML = htmlDatosBase + htmlCriterios;
+                cuerpo.appendChild(fila);
+            });
+
+            form.classList.remove("hidden");
+        }
+
+        function guardarEvaluacionMatriz(e) {
+            e.preventDefault();
+
+            if (!verificarHabilitacionArea(areaSeleccionadaEstudiante)) {
+                alert("El tiempo de entrega ha expirado mientras completaba el formulario.");
+                return;
+            }
+
+            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+            const docentesFiltrados = listaDocentes.filter(d => d.curso === estudianteSesionActiva.curso && d.area === areaSeleccionadaEstudiante);
+            const evals = JSON.parse(localStorage.getItem('evaluaciones'));
+
+            docentesFiltrados.forEach(doc => {
+                let sumaPuntos = 0;
+                for (let c = 1; c <= 8; c++) {
+                    const selector = document.querySelector(`input[name="doc_${doc.id}_crit_${c}"]:checked`);
+                    if (selector) sumaPuntos += parseInt(selector.value);
+                }
+
+                const promedio = ((sumaPuntos / 40) * 100).toFixed(1);
+                const nota = ((sumaPuntos / 40) * 7).toFixed(2);
+
+                evals.push({
+                    id: "EVAL-" + Date.now() + "-" + doc.id,
+                    estudiante: estudianteSesionActiva.cedula,
+                    estudianteNombre: estudianteSesionActiva.nombre,
+                    area: areaSeleccionadaEstudiante,
+                    docenteId: doc.id,
+                    promedio: parseFloat(promedio),
+                    nota: parseFloat(nota)
+                });
+            });
+
+            localStorage.setItem('evaluaciones', JSON.stringify(evals));
+            alert("¡Evaluación de área guardada exitosamente!");
+            
+            document.getElementById("evalForm").classList.add("hidden");
+            areaSeleccionadaEstudiante = "";
+            document.getElementById("btnAreaSub").className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+            document.getElementById("btnAreaGest").className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+        }
+
+        // ==================== MANTENIMIENTO GENERAL (CURSOS / DOCENTES) ====================
+        function agregarCurso(e) {
+            e.preventDefault();
+            const nombreCurso = document.getElementById("newCursoNombre").value.trim();
+            if (!nombreCurso) return;
+
+            const cursos = JSON.parse(localStorage.getItem('cursos'));
+            if (cursos.includes(nombreCurso)) {
+                alert("Este curso ya se encuentra registrado.");
+                return;
+            }
+
+            cursos.push(nombreCurso);
+            localStorage.setItem('cursos', JSON.stringify(cursos));
+            document.getElementById("cursoForm").reset();
+            actualizarVistas();
+        }
+
+        function eliminarCurso(cursoNombre) {
+            if (confirm(`¿Está seguro de eliminar el curso "${cursoNombre}"?`)) {
+                let cursos = JSON.parse(localStorage.getItem('cursos'));
+                cursos = cursos.filter(c => c !== cursoNombre);
+                localStorage.setItem('cursos', JSON.stringify(cursos));
+                actualizarVistas();
+            }
+        }
+
+        function agregarNuevoDocente(e) {
+            e.preventDefault();
+            const area = document.getElementById("newDocenteArea").value;
+            const cedula = document.getElementById("newDocenteCedula").value.trim();
+            const grado = document.getElementById("newDocenteGrado").value;
+            const nombre = document.getElementById("newDocenteNombre").value.trim();
+            const curso = document.getElementById("newDocenteCurso").value;
+            const asignatura = document.getElementById("newDocenteAsignatura").value.trim();
+            const paralelo = document.getElementById("newDocenteParalelo").value.trim().toUpperCase();
+
+            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+            listaDocentes.push({ id: Date.now(), area, cedula, grado, nombre, curso, asignatura, paralelo });
+            localStorage.setItem('docentes', JSON.stringify(listaDocentes));
+            
+            alert(`Docente asignado correctamente.`);
+            document.getElementById("docenteForm").reset();
+            actualizarVistas();
+        }
+
+        function eliminarDocente(id) {
+            if (confirm("¿Desea dar de baja este registro docente?")) {
+                let listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+                listaDocentes = listaDocentes.filter(d => d.id !== id);
+                localStorage.setItem('docentes', JSON.stringify(listaDocentes));
+                
+                let evals = JSON.parse(localStorage.getItem('evaluaciones'));
+                evals = evals.filter(e => e.docenteId !== id);
+                localStorage.setItem('evaluaciones', JSON.stringify(evals));
+
+                actualizarVistas();
+            }
+        }
+
+        // ==================== FUNCIONES DE ELIMINACIÓN MASIVA ====================
+        function seleccionarTodosDocentes(status) {
+            const checkboxes = document.querySelectorAll(".check-docente-item");
+            checkboxes.forEach(chk => chk.checked = status);
+        }
+
+        function eliminarDocentesMasivo() {
+            const checkboxes = document.querySelectorAll(".check-docente-item:checked");
+            if (checkboxes.length === 0) {
+                alert("Por favor, seleccione al menos un docente de la lista utilizando las casillas de verificación.");
+                return;
+            }
+
+            if (confirm(`⚠️ ¿Está completamente seguro que desea eliminar masivamente los ${checkboxes.length} registros seleccionados?\nEsta acción borrará de forma permanente a los docentes y todas sus evaluaciones vinculadas.`)) {
+                let listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+                let evals = JSON.parse(localStorage.getItem('evaluaciones'));
+
+                checkboxes.forEach(chk => {
+                    const docId = parseInt(chk.value);
+                    listaDocentes = listaDocentes.filter(d => d.id !== docId);
+                    evals = evals.filter(e => e.docenteId !== docId);
+                });
+
+                localStorage.setItem('docentes', JSON.stringify(listaDocentes));
+                localStorage.setItem('evaluaciones', JSON.stringify(evals));
+
+                document.getElementById("checkMasivoMaestro").checked = false;
+                alert("🗑️ Eliminación masiva completada con éxito.");
+                actualizarVistas();
+            }
+        }
+
+        function descargarExcelCSV() {
+            const evals = JSON.parse(localStorage.getItem('evaluaciones'));
+            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+
+            if(evals.length === 0) {
+                alert("No existen datos disponibles para el reporte.");
+                return;
+            }
+
+            let csvContent = "\uFEFFsep=;\n"; 
+            csvContent += "Área;Cédula Estudiante;Nombres Estudiante;Cédula Docente;Grado Docente;Nombre Docente;Curso;Asignatura;Paralelo;Promedio Porcentual;Nota Final (Sobre 7)\n";
+
+            evals.forEach(e => {
+                const doc = listaDocentes.find(d => d.id === e.docenteId) || { 
+                    cedula: "N/A", nombre: "Eliminado", grado: "N/A", curso: "N/A", asignatura: "N/A", paralelo: "N/A" 
+                };
+                
+                const area = (e.area || "N/A").replace(/;/g, '');
+                const estudianteCedula = e.estudiante.replace(/;/g, '');
+                const estudianteNombre = (e.estudianteNombre || "N/A").replace(/;/g, '');
+                const cedulaDocente = doc.cedula.replace(/;/g, '');
+                const gradoDocente = doc.grado.replace(/;/g, '');
+                const nombreDocente = doc.nombre.replace(/;/g, '');
+                const curso = doc.curso.replace(/;/g, '');
+                const asignatura = doc.asignatura.replace(/;/g, '');
+                const paralelo = doc.paralelo.replace(/;/g, '');
+                
+                const promedio = e.promedio.toString().replace('.', ',');
+                const nota = e.nota.toString().replace('.', ',');
+
+                csvContent += `${area};${estudianteCedula};${estudianteNombre};${cedulaDocente};${gradoDocente};${nombreDocente};${curso};${asignatura};${paralelo};${promedio}%;${nota}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Reporte_Evaluaciones_Global_${Date.now()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function actualizarVistas() {
+            const poolsCursos = JSON.parse(localStorage.getItem('cursos'));
+            
+            const selectAdminDoc = document.getElementById("newDocenteCurso");
+            const selectAdminEst = document.getElementById("matEstuCurso");
+            
+            const selectedDoc = selectAdminDoc.value;
+            const selectedEst = selectAdminEst.value;
+
+            selectAdminDoc.innerHTML = '';
+            selectAdminEst.innerHTML = '';
+
+            poolsCursos.forEach(c => {
+                selectAdminDoc.innerHTML += `<option value="${c}">${c}</option>`;
+                selectAdminEst.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+
+            if(poolsCursos.includes(selectedDoc)) selectAdminDoc.value = selectedDoc;
+            if(poolsCursos.includes(selectedEst)) selectAdminEst.value = selectedEst;
+
+            // Renderizar Lista de Cursos
+            const listaAdmin = document.getElementById("listaCursosAdmin");
+            listaAdmin.innerHTML = '';
+            poolsCursos.forEach(c => {
+                listaAdmin.innerHTML += `
+                    <li class="flex justify-between items-center p-2 hover:bg-gray-50">
+                        <span class="truncate pr-2">${c}</span>
+                        <button onclick="eliminarCurso('${c}')" class="text-red-500 hover:text-red-700 font-bold text-xs px-1">✕</button>
+                    </li>`;
+            });
+
+            // Renderizar Cuentas Administrativas (Maestra + Adicionales)
+            const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
+            const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
+            const tablaCuentasAdmin = document.getElementById("tablaAdminCuentas");
+            tablaCuentasAdmin.innerHTML = `
+                <tr class="bg-indigo-50 font-medium">
+                    <td class="p-2 border border-gray-100 text-indigo-900 font-bold">⭐ Cuenta Principal</td>
+                    <td class="p-2 border border-gray-100 font-bold text-gray-800">Administrador Maestro</td>
+                    <td class="p-2 border border-gray-100 font-mono text-indigo-950 font-bold">${credsMaestras.usuario}</td>
+                    <td class="p-2 border border-gray-100 text-center text-xs text-gray-400 italic">No es posible remover</td>
+                </tr>
+            `;
+            adminsAdicionales.forEach(a => {
+                tablaCuentasAdmin.innerHTML += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-2 border border-gray-100 text-cyan-800 font-semibold">👤 Co-Administrador</td>
+                        <td class="p-2 border border-gray-100 text-gray-700">${a.nombre}</td>
+                        <td class="p-2 border border-gray-100 font-mono text-gray-800">${a.usuario}</td>
+                        <td class="p-2 border border-gray-100 text-center">
+                            <button onclick="removerAdminAdicional('${a.id}')" class="text-red-600 hover:text-red-800 font-bold">Revocar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            // Renderizar Nómina de Alumnos Matriculados
+            const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
+            const cuerpoEstudiantes = document.getElementById("nominaEstudiantesAdmin");
+            cuerpoEstudiantes.innerHTML = "";
+            if (estudiantes.length > 0) {
+                estudiantes.forEach(e => {
+                    cuerpoEstudiantes.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-2 border border-gray-100 font-mono font-bold">${e.cedula}</td>
+                            <td class="p-2 border border-gray-100">${e.nombre}</td>
+                            <td class="p-2 border border-gray-100 text-gray-500">${e.curso}</td>
+                            <td class="p-2 border border-gray-100 text-center">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${e.esTemporal ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'}">
+                                    ${e.esTemporal ? 'Temporal (Sin cambiar)' : 'Actualizada'}
+                                </span>
+                            </td>
+                            <td class="p-2 border border-gray-100 text-center">
+                                <button onclick="desmatricularEstudiante('${e.cedula}')" class="text-red-600 hover:text-red-800 font-bold">Quitar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
+                cuerpoEstudiantes.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">No hay estudiantes cargados en el sistema.</td></tr>`;
+            }
+
+            // Renderizar Calificaciones y Docentes
+            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+            const evals = JSON.parse(localStorage.getItem('evaluaciones'));
+            const tablaAdmin = document.getElementById("tablaAdminDocentes");
+            tablaAdmin.innerHTML = "";
+
+            if(listaDocentes.length > 0) {
+                listaDocentes.forEach(doc => {
+                    const evalsDocente = evals.filter(e => e.docenteId === doc.id);
+                    const numeroEvaluadores = evalsDocente.length;
+
+                    let promedioPorcentualTotal = 0;
+                    let notaFinalTotal = 0;
+
+                    if (numeroEvaluadores > 0) {
+                        const sumaPromedios = evalsDocente.reduce((acc, curr) => acc + parseFloat(curr.promedio), 0);
+                        const sumaNotas = evalsDocente.reduce((acc, curr) => acc + parseFloat(curr.nota), 0);
+                        
+                        promedioPorcentualTotal = (sumaPromedios / numeroEvaluadores).toFixed(1);
+                        notaFinalTotal = (sumaNotas / numeroEvaluadores).toFixed(2);
+                    }
+
+                    tablaAdmin.innerHTML += `
+                        <tr class="hover:bg-gray-50 border-b border-gray-200">
+                            <td class="p-3 text-center">
+                                <input type="checkbox" value="${doc.id}" class="check-docente-item w-4 h-4 text-indigo-600 rounded focus:ring-0 cursor-pointer">
+                            </td>
+                            <td class="p-3 font-semibold text-indigo-900 text-xs">${doc.area || 'Subdirección'}</td>
+                            <td class="p-3 font-mono text-xs">${doc.cedula}</td>
+                            <td class="p-3 text-xs">${doc.grado}</td>
+                            <td class="p-3 font-medium text-gray-900 text-xs">${doc.nombre}</td>
+                            <td class="p-3 text-[11px] text-gray-500">${doc.curso}</td>
+                            <td class="p-3 text-[11px] font-medium text-indigo-950">${doc.asignatura}</td>
+                            <td class="p-3 text-center font-bold text-xs">${doc.paralelo}</td>
+                            
+                            <td class="p-3 text-center font-semibold bg-indigo-50 text-indigo-900 text-xs">${numeroEvaluadores}</td>
+                            <td class="p-3 text-center font-bold bg-amber-50 text-indigo-950 text-xs">${numeroEvaluadores > 0 ? promedioPorcentualTotal + '%' : '0.0%'}</td>
+                            <td class="p-3 text-center font-bold bg-green-50 text-green-700 text-xs">${numeroEvaluadores > 0 ? notaFinalTotal : '0.00'}</td>
+                            
+                            <td class="p-3 text-center">
+                                <button onclick="eliminarDocente(${doc.id})" class="bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold py-1 px-2.5 rounded shadow transition">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>`;
+                });
+            } else {
+                tablaAdmin.innerHTML = `<tr><td colspan="12" class="p-6 text-center text-gray-400">No hay registros en la base de datos general.</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>
