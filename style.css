@@ -1,65 +1,273 @@
-/* ==========================================================================
-   ESTILOS GENERALES Y CONFIGURACIÓN BASE
-   ========================================================================== */
-@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+css_content = """/**
+ * Institutional & Academic Virtual Learning Environment (VLE) Stylesheet
+ * Custom CSS for Moodle Platform & Administrative Dashboards
+ * Location: Quito, Ecuador
+ * Version: 1.0.0
+ * Description: Clean, professional, high-accessibility stylesheet featuring deep institutional blues, 
+ * academic gold highlights, responsive typography, and polished structural components.
+ */
 
-body {
-    background-color: #f8fafc; /* bg-slate-50 */
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #1e293b; /* text-slate-800 */
-    min-height: 100vh;
+/* ==========================================================================
+   1. CSS VARIABLES & THEMING
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --primary-color: #1e3a8a;       /* Deep Institutional Blue */
+    --primary-hover: #172554;       /* Darker Blue for Interactive Hover States */
+    --secondary-color: #b45309;     /* Academic Amber/Gold Accent */
+    --secondary-hover: #92400e;     /* Darker Amber */
+    
+    /* Neutral Colors */
+    --bg-main: #f8fafc;             /* Light Slate Background */
+    --bg-surface: #ffffff;          /* Card & Container Background */
+    --text-main: #0f172a;           /* Dark Slate Text for High Readability */
+    --text-muted: #475569;          /* Medium Slate for Secondary Text */
+    --border-color: #cbd5e1;        /* Light Grey Border */
+    
+    /* Feedback States */
+    --success: #15803d;
+    --success-bg: #dcfce7;
+    --warning: #b45309;
+    --warning-bg: #fef3c7;
+    --danger: #b91c1c;
+    --danger-bg: #fee2e2;
+    --info: #0369a1;
+    --info-bg: #e0f2fe;
+
+    /* Layout & Spacing */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
 }
 
 /* ==========================================================================
-   COMPONENTES PERSONALIZADOS - MATRIZ DE EVALUACIÓN
+   2. RESET & BASE STYLES
    ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
-/* Ajustes de legibilidad para las cabeceras de los criterios institucionales */
-.tabla-matriz th {
-    font-size: 11px;
-    line-height: 1.2;
-    padding: 8px 4px;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; border-left: 5px solid var(--secondary-color); padding-left: 12px; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   4. LAYOUT COMPONENTS
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.dashboard-grid {
+    display: block; /* Fallback for older layout rendering engines */
+}
+
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   5. UI CONTROLS & BUTTONS
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-secondary {
+    color: #ffffff;
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   6. TABLES (ACADEMIC REGISTERS & MATRICULATION)
+   ========================================================================== */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    background-color: var(--bg-surface);
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table th {
+    background-color: var(--primary-color);
+    color: #ffffff;
     font-weight: 600;
 }
 
-/* Contenedor de cada opción de la escala Likert (Excelente - Muy Deficiente) */
-.opcion-likert {
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2px 4px;
-    transition: background-color 0.15s ease-in-out;
-    border-radius: 0.25rem;
+.custom-table tbody tr:nth-of-type(even) {
+    background-color: #f1f5f9;
 }
 
-/* Efecto hover interactivo para mejorar la precisión visual de la fila al marcar */
-.opcion-likert:hover {
-    background-color: #f3f4f6; /* bg-slate-100 */
+.custom-table tbody tr:hover {
+    background-color: #e2e8f0;
 }
 
-/* Optimización para los selectores de tipo Radio e Inputs en entornos estricto CSS */
-.opcion-likert input[type="radio"] {
-    width: 0.875rem;
-    height: 0.875rem;
-    cursor: pointer;
-    accent-color: #1e1b4b; /* Tono Indigo-950 adaptado para inputs nativos */
+/* ==========================================================================
+   7. FORM ELEMENTS & ALERTS
+   ========================================================================== */
+.form-group {
+    margin-bottom: 1.25rem;
 }
 
-/* Personalización del scrollbar horizontal para la tabla de datos masivos */
-.overflow-x-auto::-webkit-scrollbar {
-    height: 6px;
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-main);
 }
 
-.overflow-x-auto::-webkit-scrollbar-track {
-    background: #f1f5f9;
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-main);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition-fast);
 }
 
-.overflow-x-auto::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.25);
 }
 
-.overflow-x-auto::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+/* Alerts and Callouts */
+.alert {
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid transparent;
 }
+
+.alert-success {
+    background-color: var(--success-bg);
+    color: var(--success);
+    border-left-color: var(--success);
+}
+
+.alert-danger {
+    background-color: var(--danger-bg);
+    color: var(--danger);
+    border-left-color: var(--danger);
+}
+
+.alert-info {
+    background-color: var(--info-bg);
+    color: var(--info);
+    border-left-color: var(--info);
+}
+
+/* Moodle Custom Specific Fixes */
+.path-mod-quiz .submitbuttons {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f1f5f9;
+    border-radius: var(--radius-md);
+}
+"""
+
+with open("estilos_institucionales.css", "w", encoding="utf-8") as f:
+    f.write(css_content)
+print("File created successfully.")

@@ -133,7 +133,7 @@
                     </button>
                 </div>
 
-                <div class="flex flex-wrap gap-4 justify-center md:justify-start mb-6">
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start mb-2">
                     <button type="button" onclick="seleccionarAreaEstudiante('Subdirección')" id="btnAreaSub" class="flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300">
                         Subdirección
                     </button>
@@ -141,14 +141,21 @@
                         Gestión Académica
                     </button>
                 </div>
+                <p class="text-[11px] text-gray-400 mb-6 italic">*Nota: Solo podrá hacer clic en las áreas que tenga autorizadas por la administración.</p>
 
                 <div id="alertaFechaBloqueo" class="hidden mb-6 p-4 rounded-lg border text-center font-medium">
                     <p id="mensajeAlertaFecha"></p>
                 </div>
 
+                <div id="contenedorSelectorCursoEstudiante" class="hidden bg-slate-50 p-4 border border-slate-200 rounded-lg mb-6">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Seleccione el Curso / Promoción a Evaluar:</label>
+                    <select id="selectCursoFiltroEstudiante" onchange="cambiarCursoFiltroEstudiante(this.value)" class="w-full md:w-1/2 p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200 text-sm bg-white font-medium">
+                    </select>
+                </div>
+
                 <form id="evalForm" onsubmit="guardarEvaluacionMatriz(event)" class="hidden space-y-6">
                     <div class="bg-indigo-50 p-3 rounded border border-indigo-200 text-xs font-bold text-indigo-900 uppercase">
-                        Evaluando Área: <span id="areaSeleccionadaBadge"></span> | Curso: <span id="cursoEstudianteBadge"></span>
+                        Evaluando Área: <span id="areaSeleccionadaBadge"></span> | Curso seleccionado: <span id="cursoEstudianteBadge"></span>
                     </div>
                     <div class="border border-gray-300 rounded-lg overflow-x-auto shadow-sm">
                         <table class="w-full text-left border-collapse bg-white table-fixed min-w-[1400px] tabla-matriz">
@@ -373,7 +380,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-white rounded-lg shadow p-6 border-l-4 border-emerald-600 lg:col-span-1">
                     <h2 class="text-xl font-semibold text-gray-800 mb-2">Matricular Estudiante</h2>
-                    <p class="text-xs text-gray-500 mb-4">Genere cuentas de estudiantes con clave temporal de primer ingreso.</p>
+                    <p class="text-xs text-gray-500 mb-4">Genere cuentas vinculando los cursos y las áreas permitidas para su evaluación.</p>
                     <form id="estudianteMatriculaForm" onsubmit="matricularEstudiante(event)" class="space-y-3">
                         <div>
                             <label class="block text-xs font-medium text-gray-700">Cédula (Usuario):</label>
@@ -383,9 +390,25 @@
                             <label class="block text-xs font-medium text-gray-700">Nombres Completos:</label>
                             <input type="text" id="matEstuNombre" required placeholder="Ej. Juan Carlos López" class="w-full p-2 text-xs border border-gray-300 rounded">
                         </div>
+                        
                         <div>
-                            <label class="block text-xs font-medium text-gray-700">Curso / Promoción:</label>
-                            <select id="matEstuCurso" required class="w-full p-2 text-xs border border-gray-300 rounded"></select>
+                            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Asignar Áreas Permitidas:</label>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <label class="flex items-center gap-1.5 bg-white p-1.5 rounded border border-gray-200 cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" id="matEstuAreaSub" value="Subdirección" checked class="w-3.5 h-3.5 text-indigo-600 rounded">
+                                    <span class="font-medium">Subdirección</span>
+                                </label>
+                                <label class="flex items-center gap-1.5 bg-white p-1.5 rounded border border-gray-200 cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" id="matEstuAreaGest" value="Gestión académica" checked class="w-3.5 h-3.5 text-indigo-600 rounded">
+                                    <span class="font-medium">Gestión Académica</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Asignar Cursos (Selección Múltiple):</label>
+                            <div id="contenedorCheckboxesCursosAdmin" class="max-h-[120px] overflow-y-auto border border-gray-200 p-2 rounded bg-slate-50 space-y-1.5 text-xs">
+                            </div>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-700">Contraseña Temporal:</label>
@@ -399,14 +422,15 @@
 
                 <div class="bg-white rounded-lg shadow p-6 lg:col-span-2 overflow-hidden">
                     <h2 class="text-xl font-semibold text-gray-800 mb-2">Nómina de Estudiantes Matriculados</h2>
-                    <p class="text-xs text-gray-500 mb-4">Lista completa de alumnos cargados al ecosistema.</p>
-                    <div class="overflow-x-auto max-h-[300px]">
+                    <p class="text-xs text-gray-500 mb-4">Lista completa de alumnos, sus áreas de acceso y promociones autorizadas.</p>
+                    <div class="overflow-x-auto max-h-[360px]">
                         <table class="w-full text-left text-xs border-collapse">
                             <thead>
                                 <tr class="bg-gray-100 border-b border-gray-300 text-gray-700 uppercase">
                                     <th class="p-2 border border-gray-200">Cédula</th>
                                     <th class="p-2 border border-gray-200">Nombres</th>
-                                    <th class="p-2 border border-gray-200">Curso</th>
+                                    <th class="p-2 border border-gray-200">Áreas Permitidas</th>
+                                    <th class="p-2 border border-gray-200">Cursos Asignados</th>
                                     <th class="p-2 border border-gray-200 text-center">Estado Clave</th>
                                     <th class="p-2 border border-gray-200 text-center">Acción</th>
                                 </tr>
@@ -463,6 +487,7 @@
 
     <script>
         let areaSeleccionadaEstudiante = "";
+        let cursoFiltroEstudianteSeleccionado = "";
         let isAdminAutenticado = false; 
         let estudianteSesionActiva = null; 
 
@@ -474,14 +499,13 @@
             { texto: "Muy Deficiente", valor: 1 }
         ];
 
-        // Inicialización de LocalStorage y Credenciales Maestras por defecto
+        // Inicialización de LocalStorage y Credenciales Maestras
         if (!localStorage.getItem('adminCredenciales')) {
             localStorage.setItem('adminCredenciales', JSON.stringify({
                 usuario: "0202382636",
                 password: "AdmiMoodle2026"
             }));
         }
-        // Repositorio de Administradores adicionales
         if (!localStorage.getItem('adminsAdicionales')) {
             localStorage.setItem('adminsAdicionales', JSON.stringify([]));
         }
@@ -541,17 +565,13 @@
             const usuarioInput = document.getElementById("loginAdminUsuario").value.trim();
             const contrasenaInput = document.getElementById("loginAdminPassword").value;
 
-            // 1. Verificar contra el Admin Maestro Principal
             const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
             let accesoConcedido = (usuarioInput === credsMaestras.usuario && contrasenaInput === credsMaestras.password);
 
-            // 2. Si no es el maestro, verificar en administradores adicionales
             if (!accesoConcedido) {
                 const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
                 const subAdmin = adminsAdicionales.find(a => a.usuario === usuarioInput && a.password === contrasenaInput);
-                if (subAdmin) {
-                    accesoConcedido = true;
-                }
+                if (subAdmin) accesoConcedido = true;
             }
 
             if (accesoConcedido) {
@@ -580,13 +600,6 @@
                 return;
             }
 
-            // Evitar colisión con usuarios de administradores adicionales
-            const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
-            if (adminsAdicionales.some(a => a.usuario === nuevoUser)) {
-                alert("Este usuario ya está asignado a un administrador adicional. Elija otro diferente.");
-                return;
-            }
-
             const nuevasCreds = { usuario: nuevoUser, password: nuevoPass };
             localStorage.setItem('adminCredenciales', JSON.stringify(nuevasCreds));
             alert("🔒 Tus credenciales principales han sido actualizadas con éxito.");
@@ -609,7 +622,6 @@
             const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
             const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
 
-            // Validar que no se repita con el admin principal ni con otros co-admins
             if (usuario === credsMaestras.usuario || adminsAdicionales.some(a => a.usuario === usuario)) {
                 alert("El nombre de usuario ya se encuentra registrado en el sistema. Ingrese uno diferente.");
                 return;
@@ -667,7 +679,31 @@
                     mostrarSeccion('vista-cambio-password');
                 } else {
                     document.getElementById("nombreEstudianteActivo").innerText = estu.nombre;
-                    document.getElementById("cursoEstudianteBadge").innerText = estu.curso;
+                    
+                    // LÓGICA DE CONTROL DE ÁREA: Bloquear/Habilitar botones visuales del Alumno
+                    const btnSub = document.getElementById("btnAreaSub");
+                    const btnGest = document.getElementById("btnAreaGest");
+                    
+                    // Restablecer por defecto
+                    btnSub.disabled = true;
+                    btnGest.disabled = true;
+                    btnSub.style.opacity = "0.3";
+                    btnSub.style.cursor = "not-allowed";
+                    btnGest.style.opacity = "0.3";
+                    btnGest.style.cursor = "not-allowed";
+
+                    // Habilitar según áreas autorizadas
+                    if(estu.areasPermitidas && estu.areasPermitidas.includes("Subdirección")) {
+                        btnSub.disabled = false;
+                        btnSub.style.opacity = "1";
+                        btnSub.style.cursor = "pointer";
+                    }
+                    if(estu.areasPermitidas && estu.areasPermitidas.includes("Gestión académica")) {
+                        btnGest.disabled = false;
+                        btnGest.style.opacity = "1";
+                        btnGest.style.cursor = "pointer";
+                    }
+
                     mostrarSeccion('vista-estudiante-panel');
                 }
             } else {
@@ -698,25 +734,53 @@
             localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
             alert("Contraseña actualizada correctamente. ¡Ya puede proceder con su evaluación!");
             
+            // Re-ejecutar lógica de bloqueo de botones
+            const btnSub = document.getElementById("btnAreaSub");
+            const btnGest = document.getElementById("btnAreaGest");
+            btnSub.disabled = !estudianteSesionActiva.areasPermitidas.includes("Subdirección");
+            btnGest.disabled = !estudianteSesionActiva.areasPermitidas.includes("Gestión académica");
+            btnSub.style.opacity = btnSub.disabled ? "0.3" : "1";
+            btnGest.style.opacity = btnGest.disabled ? "0.3" : "1";
+
             document.getElementById("nombreEstudianteActivo").innerText = estudianteSesionActiva.nombre;
-            document.getElementById("cursoEstudianteBadge").innerText = estudianteSesionActiva.curso;
             mostrarSeccion('vista-estudiante-panel');
         }
 
         function cerrarSesionEstudiante() {
             estudianteSesionActiva = null;
+            areaSeleccionadaEstudiante = "";
+            cursoFiltroEstudianteSeleccionado = "";
             document.getElementById("loginEstuCedula").value = "";
             document.getElementById("loginEstuPassword").value = "";
+            document.getElementById("contenedorSelectorCursoEstudiante").classList.add("hidden");
+            document.getElementById("evalForm").classList.add("hidden");
             mostrarSeccion('vista-login-estudiante');
         }
 
-        // ==================== MATRICULACIÓN DE ESTUDIANTES ====================
+        // ==================== MATRICULACIÓN DE ESTUDIANTES MULTI-CURSO Y ÁREA ====================
         function matricularEstudiante(e) {
             e.preventDefault();
             const cedula = document.getElementById("matEstuCedula").value.trim();
-            const fontNombre = document.getElementById("matEstuNombre").value.trim();
-            const curso = document.getElementById("matEstuCurso").value;
+            const nombre = document.getElementById("matEstuNombre").value.trim();
             const password = document.getElementById("matEstuPassword").value;
+
+            // 1. Obtener Áreas marcadas
+            const areasSeleccionadas = [];
+            if(document.getElementById("matEstuAreaSub").checked) areasSeleccionadas.push("Subdirección");
+            if(document.getElementById("matEstuAreaGest").checked) areasSeleccionadas.push("Gestión académica");
+
+            if(areasSeleccionadas.length === 0) {
+                alert("Debe asignar al menos un área de acceso permitida para el estudiante.");
+                return;
+            }
+
+            // 2. Obtener Cursos marcados
+            const checkboxesCursos = document.querySelectorAll(".check-curso-matricula:checked");
+            if (checkboxesCursos.length === 0) {
+                alert("Debe seleccionar al menos un curso/promoción para matricular al estudiante.");
+                return;
+            }
+            const cursosAsignados = Array.from(checkboxesCursos).map(cb => cb.value);
 
             const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
             if (estudiantes.some(e => e.cedula === cedula)) {
@@ -726,15 +790,18 @@
 
             estudiantes.push({
                 cedula,
-                nombre: fontNombre,
-                curso,
+                nombre,
+                areasPermitidas: areasSeleccionadas, // Guardar áreas asignadas
+                cursos: cursosAsignados, 
                 password,
                 esTemporal: true 
             });
 
             localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
-            alert("Estudiante matriculado con éxito.");
+            alert(`Estudiante matriculado con éxito.`);
             document.getElementById("estudianteMatriculaForm").reset();
+            document.getElementById("matEstuAreaSub").checked = true;
+            document.getElementById("matEstuAreaGest").checked = true;
             actualizarVistas();
         }
 
@@ -747,88 +814,66 @@
             }
         }
 
-        // ==================== LÓGICA DE CRONOGRAMAS Y EVALUACIÓN ====================
-        function cargarFechasEnAdmin() {
-            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
-            if(fechas) {
-                document.getElementById("fechaInicioSub").value = fechas.subdirección.inicio || "";
-                document.getElementById("fechaFinSub").value = fechas.subdirección.fin || "";
-                document.getElementById("fechaInicioGest").value = fechas.gestiónAcadémica.inicio || "";
-                document.getElementById("fechaFinGest").value = fechas.gestiónAcadémica.fin || "";
-            }
-        }
-
-        function guardarFechasHabilitacion() {
-            const fechas = {
-                subdirección: {
-                    inicio: document.getElementById("fechaInicioSub").value,
-                    fin: document.getElementById("fechaFinSub").value
-                },
-                gestiónAcadémica: {
-                    inicio: document.getElementById("fechaInicioGest").value,
-                    fin: document.getElementById("fechaFinGest").value
-                }
-            };
-            localStorage.setItem('fechasHabilitacion', JSON.stringify(fechas));
-            alert("Cronograma de habilitación temporal guardado con éxito.");
-        }
-
-        function verificarHabilitacionArea(area) {
-            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
-            const ahora = new Date();
-            
-            const llaveArea = area === 'Subdirección' ? 'subdirección' : 'gestiónAcadémica';
-            const configuracion = fechas[llaveArea];
-
-            const alertaBloqueo = document.getElementById("alertaFechaBloqueo");
-            const mensajeAlerta = document.getElementById("mensajeAlertaFecha");
-            const evalForm = document.getElementById("evalForm");
-
-            if (!configuracion.inicio || !configuracion.fin) {
-                alertaBloqueo.classList.add("hidden");
-                return true;
-            }
-
-            const fechaInicio = new Date(configuracion.inicio);
-            const fechaFin = new Date(configuracion.fin);
-
-            if (ahora < fechaInicio) {
-                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-amber-50 border-amber-300 text-amber-800";
-                mensajeAlerta.innerHTML = `⚠️ El proceso de evaluación para el área de <strong>${area}</strong> aún no se encuentra habilitado.<br><small>Disponible desde: ${fechaInicio.toLocaleString()}</small>`;
-                alertaBloqueo.classList.remove("hidden");
-                evalForm.classList.add("hidden");
-                return false;
-            } else if (ahora > fechaFin) {
-                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-red-50 border-red-300 text-red-800";
-                mensajeAlerta.innerHTML = `🛑 El tiempo límite para evaluar el área de <strong>${area}</strong> ha finalizado el ${fechaFin.toLocaleString()}.`;
-                alertaBloqueo.classList.remove("hidden");
-                evalForm.classList.add("hidden");
-                return false;
-            }
-
-            alertaBloqueo.classList.add("hidden");
-            return true;
-        }
-
+        // ==================== LÓGICA DE FILTRADO Y MATRIZ ESTUDIANTE ====================
         function seleccionarAreaEstudiante(area) {
+            // Validación redundante de seguridad en la selección del área
+            if(!estudianteSesionActiva.areasPermitidas.includes(area)) {
+                alert("No tiene permisos para acceder a esta área.");
+                return;
+            }
+
             areaSeleccionadaEstudiante = area;
+            cursoFiltroEstudianteSeleccionado = ""; 
             
             const btnSub = document.getElementById("btnAreaSub");
             const btnGest = document.getElementById("btnAreaGest");
             
             if(area === 'Subdirección') {
                 btnSub.className = "flex-1 md:flex-none bg-indigo-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-200 text-center uppercase tracking-wide border border-indigo-950";
-                btnGest.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+                if(estudianteSesionActiva.areasPermitidas.includes("Gestión académica")) {
+                    btnGest.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+                }
             } else {
                 btnGest.className = "flex-1 md:flex-none bg-indigo-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-200 text-center uppercase tracking-wide border border-indigo-950";
-                btnSub.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+                if(estudianteSesionActiva.areasPermitidas.includes("Subdirección")) {
+                    btnSub.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+                }
             }
 
             const habilitado = verificarHabilitacionArea(area);
             if (habilitado) {
                 document.getElementById("areaSeleccionadaBadge").innerText = area.toUpperCase();
-                generarMatrizEvaluacion(estudianteSesionActiva.curso);
+                poblarSelectorCursosEstudiante();
             }
+        }
+
+        function poblarSelectorCursosEstudiante() {
+            const contenedor = document.getElementById("contenedorSelectorCursoEstudiante");
+            const select = document.getElementById("selectCursoFiltroEstudiante");
+            document.getElementById("evalForm").classList.add("hidden");
+
+            if (!estudianteSesionActiva || !estudianteSesionActiva.cursos || estudianteSesionActiva.cursos.length === 0) {
+                select.innerHTML = '<option value="">El estudiante no posee cursos asignados</option>';
+                contenedor.classList.remove("hidden");
+                return;
+            }
+
+            select.innerHTML = '<option value="">-- Seleccione el Curso a Evaluar --</option>';
+            estudianteSesionActiva.cursos.forEach(curso => {
+                select.innerHTML += `<option value="${curso}">${curso}</option>`;
+            });
+
+            contenedor.classList.remove("hidden");
+        }
+
+        function cambiarCursoFiltroEstudiante(cursoSeleccionado) {
+            cursoFiltroEstudianteSeleccionado = cursoSeleccionado;
+            if (!cursoSeleccionado) {
+                document.getElementById("evalForm").classList.add("hidden");
+                return;
+            }
+            document.getElementById("cursoEstudianteBadge").innerText = cursoSeleccionado.toUpperCase();
+            generarMatrizEvaluacion(cursoSeleccionado);
         }
 
         function generarMatrizEvaluacion(cursoSeleccionado) {
@@ -886,12 +931,12 @@
             e.preventDefault();
 
             if (!verificarHabilitacionArea(areaSeleccionadaEstudiante)) {
-                alert("El tiempo de entrega ha expirado mientras completaba el formulario.");
+                alert("El tiempo de entrega ha expirado.");
                 return;
             }
 
             const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-            const docentesFiltrados = listaDocentes.filter(d => d.curso === estudianteSesionActiva.curso && d.area === areaSeleccionadaEstudiante);
+            const docentesFiltrados = listaDocentes.filter(d => d.curso === cursoFiltroEstudianteSeleccionado && d.area === areaSeleccionadaEstudiante);
             const evals = JSON.parse(localStorage.getItem('evaluaciones'));
 
             docentesFiltrados.forEach(doc => {
@@ -916,15 +961,79 @@
             });
 
             localStorage.setItem('evaluaciones', JSON.stringify(evals));
-            alert("¡Evaluación de área guardada exitosamente!");
+            alert(`¡Evaluación guardada exitosamente!`);
             
             document.getElementById("evalForm").classList.add("hidden");
-            areaSeleccionadaEstudiante = "";
-            document.getElementById("btnAreaSub").className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
-            document.getElementById("btnAreaGest").className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
+            document.getElementById("selectCursoFiltroEstudiante").value = "";
+            cursoFiltroEstudianteSeleccionado = "";
         }
 
-        // ==================== MANTENIMIENTO GENERAL (CURSOS / DOCENTES) ====================
+        // ==================== OPERACIONES DEL ADMINISTRADOR ====================
+        function cargarFechasEnAdmin() {
+            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
+            if(fechas) {
+                document.getElementById("fechaInicioSub").value = fechas.subdirección.inicio || "";
+                document.getElementById("fechaFinSub").value = fechas.subdirección.fin || "";
+                document.getElementById("fechaInicioGest").value = fechas.gestiónAcadémica.inicio || "";
+                document.getElementById("fechaFinGest").value = fechas.gestiónAcadémica.fin || "";
+            }
+        }
+
+        function guardarFechasHabilitacion() {
+            const fechas = {
+                subdirección: {
+                    inicio: document.getElementById("fechaInicioSub").value,
+                    fin: document.getElementById("fechaFinSub").value
+                },
+                gestiónAcadémica: {
+                    inicio: document.getElementById("fechaInicioGest").value,
+                    fin: document.getElementById("fechaFinGest").value
+                }
+            };
+            localStorage.setItem('fechasHabilitacion', JSON.stringify(fechas));
+            alert("Cronograma de habilitación temporal guardado con éxito.");
+        }
+
+        function verificarHabilitacionArea(area) {
+            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
+            const ahora = new Date();
+            
+            const llaveArea = area === 'Subdirección' ? 'subdirección' : 'gestiónAcadémica';
+            const configuracion = fechas[llaveArea];
+
+            const alertaBloqueo = document.getElementById("alertaFechaBloqueo");
+            const mensajeAlerta = document.getElementById("mensajeAlertaFecha");
+            const evalForm = document.getElementById("evalForm");
+            const contenedorSelector = document.getElementById("contenedorSelectorCursoEstudiante");
+
+            if (!configuracion.inicio || !configuracion.fin) {
+                alertaBloqueo.classList.add("hidden");
+                return true;
+            }
+
+            const fechaInicio = new Date(configuracion.inicio);
+            const fechaFin = new Date(configuracion.fin);
+
+            if (ahora < fechaInicio) {
+                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-amber-50 border-amber-300 text-amber-800";
+                mensajeAlerta.innerHTML = `⚠️ El proceso de evaluación para el área de <strong>${area}</strong> aún no se encuentra habilitado.<br><small>Disponible desde: ${fechaInicio.toLocaleString()}</small>`;
+                alertaBloqueo.classList.remove("hidden");
+                evalForm.classList.add("hidden");
+                contenedorSelector.classList.add("hidden");
+                return false;
+            } else if (ahora > fechaFin) {
+                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-red-50 border-red-300 text-red-800";
+                mensajeAlerta.innerHTML = `🛑 El tiempo límite para evaluar el área de <strong>${area}</strong> ha finalizado el ${fechaFin.toLocaleString()}.`;
+                alertaBloqueo.classList.remove("hidden");
+                evalForm.classList.add("hidden");
+                contenedorSelector.classList.add("hidden");
+                return false;
+            }
+
+            alertaBloqueo.classList.add("hidden");
+            return true;
+        }
+
         function agregarCurso(e) {
             e.preventDefault();
             const nombreCurso = document.getElementById("newCursoNombre").value.trim();
@@ -984,7 +1093,6 @@
             }
         }
 
-        // ==================== FUNCIONES DE ELIMINACIÓN MASIVA ====================
         function seleccionarTodosDocentes(status) {
             const checkboxes = document.querySelectorAll(".check-docente-item");
             checkboxes.forEach(chk => chk.checked = status);
@@ -993,11 +1101,11 @@
         function eliminarDocentesMasivo() {
             const checkboxes = document.querySelectorAll(".check-docente-item:checked");
             if (checkboxes.length === 0) {
-                alert("Por favor, seleccione al menos un docente de la lista utilizando las casillas de verificación.");
+                alert("Por favor, seleccione al menos un docente.");
                 return;
             }
 
-            if (confirm(`⚠️ ¿Está completamente seguro que desea eliminar masivamente los ${checkboxes.length} registros seleccionados?\nEsta acción borrará de forma permanente a los docentes y todas sus evaluaciones vinculadas.`)) {
+            if (confirm(`⚠️ ¿Desea eliminar masivamente los ${checkboxes.length} registros seleccionados?`)) {
                 let listaDocentes = JSON.parse(localStorage.getItem('docentes'));
                 let evals = JSON.parse(localStorage.getItem('evaluaciones'));
 
@@ -1059,27 +1167,36 @@
             document.body.removeChild(link);
         }
 
+        // ==================== REFRESCO DINÁMICO DE INTERFACES ====================
         function actualizarVistas() {
             const poolsCursos = JSON.parse(localStorage.getItem('cursos'));
             
+            // 1. Selector de Cursos para Carga de Docentes
             const selectAdminDoc = document.getElementById("newDocenteCurso");
-            const selectAdminEst = document.getElementById("matEstuCurso");
-            
             const selectedDoc = selectAdminDoc.value;
-            const selectedEst = selectAdminEst.value;
-
             selectAdminDoc.innerHTML = '';
-            selectAdminEst.innerHTML = '';
-
             poolsCursos.forEach(c => {
                 selectAdminDoc.innerHTML += `<option value="${c}">${c}</option>`;
-                selectAdminEst.innerHTML += `<option value="${c}">${c}</option>`;
             });
-
             if(poolsCursos.includes(selectedDoc)) selectAdminDoc.value = selectedDoc;
-            if(poolsCursos.includes(selectedEst)) selectAdminEst.value = selectedEst;
 
-            // Renderizar Lista de Cursos
+            // 2. Renderizar Checkboxes para Matrícula Múltiple de Cursos
+            const contenedorCheckboxes = document.getElementById("contenedorCheckboxesCursosAdmin");
+            contenedorCheckboxes.innerHTML = "";
+            if (poolsCursos.length > 0) {
+                poolsCursos.forEach((c) => {
+                    contenedorCheckboxes.innerHTML += `
+                        <label class="flex items-center gap-2 bg-white p-1.5 rounded border border-gray-200 cursor-pointer hover:bg-gray-100">
+                            <input type="checkbox" value="${c}" class="check-curso-matricula w-3.5 h-3.5 text-indigo-600 rounded">
+                            <span class="truncate font-medium text-slate-700">${c}</span>
+                        </label>
+                    `;
+                });
+            } else {
+                contenedorCheckboxes.innerHTML = `<span class="text-red-500 font-bold">No hay cursos registrados.</span>`;
+            }
+
+            // 3. Renderizar Lista de Cursos Lateral
             const listaAdmin = document.getElementById("listaCursosAdmin");
             listaAdmin.innerHTML = '';
             poolsCursos.forEach(c => {
@@ -1090,7 +1207,7 @@
                     </li>`;
             });
 
-            // Renderizar Cuentas Administrativas (Maestra + Adicionales)
+            // 4. Renderizar Cuentas Administrativas
             const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
             const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
             const tablaCuentasAdmin = document.getElementById("tablaAdminCuentas");
@@ -1115,17 +1232,28 @@
                 `;
             });
 
-            // Renderizar Nómina de Alumnos Matriculados
+            // 5. Renderizar Nómina de Alumnos Matriculados (Multi-Cursos y Áreas Autorizadas)
             const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
             const cuerpoEstudiantes = document.getElementById("nominaEstudiantesAdmin");
             cuerpoEstudiantes.innerHTML = "";
             if (estudiantes.length > 0) {
                 estudiantes.forEach(e => {
+                    // Formatear Áreas Autorizadas
+                    const badgeAreas = e.areasPermitidas && e.areasPermitidas.length > 0
+                        ? e.areasPermitidas.map(a => `<span class="inline-block bg-teal-100 text-teal-900 border border-teal-300 px-2 py-0.5 rounded text-[10px] font-bold mr-1">${a}</span>`).join('')
+                        : `<span class="text-red-500 italic">Sin áreas</span>`;
+
+                    // Formatear Cursos Asignados
+                    const badgeCursos = e.cursos && e.cursos.length > 0 
+                        ? e.cursos.map(c => `<span class="inline-block bg-slate-200 text-slate-800 px-2 py-0.5 rounded text-[10px] font-semibold mr-1 mb-1 shadow-sm border border-slate-300">${c}</span>`).join('')
+                        : `<span class="text-red-500 italic">Sin cursos</span>`;
+
                     cuerpoEstudiantes.innerHTML += `
                         <tr class="hover:bg-gray-50">
                             <td class="p-2 border border-gray-100 font-mono font-bold">${e.cedula}</td>
-                            <td class="p-2 border border-gray-100">${e.nombre}</td>
-                            <td class="p-2 border border-gray-100 text-gray-500">${e.curso}</td>
+                            <td class="p-2 border border-gray-100 font-medium">${e.nombre}</td>
+                            <td class="p-2 border border-gray-100">${badgeAreas}</td>
+                            <td class="p-2 border border-gray-100 max-w-[220px]">${badgeCursos}</td>
                             <td class="p-2 border border-gray-100 text-center">
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold ${e.esTemporal ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'}">
                                     ${e.esTemporal ? 'Temporal (Sin cambiar)' : 'Actualizada'}
@@ -1138,10 +1266,10 @@
                     `;
                 });
             } else {
-                cuerpoEstudiantes.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">No hay estudiantes cargados en el sistema.</td></tr>`;
+                cuerpoEstudiantes.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No hay estudiantes cargados en el sistema.</td></tr>`;
             }
 
-            // Renderizar Calificaciones y Docentes
+            // 6. Renderizar Calificaciones y Docentes
             const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
             const evals = JSON.parse(localStorage.getItem('evaluaciones'));
             const tablaAdmin = document.getElementById("tablaAdminDocentes");
