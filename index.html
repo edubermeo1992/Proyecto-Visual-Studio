@@ -169,15 +169,14 @@
                                     <th class="w-[80px] border border-gray-300 p-2">Grado</th>
                                     <th class="w-[90px] border border-gray-300 p-2">Cédula</th>
                                     <th class="w-[180px] border border-gray-300 p-2">Nombre del Docente</th>
-                                    
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Demuestra compromiso con la enseñanza a través de la puntualidad, la responsabilidad y el respeto hacia estudiantes...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Organiza la clase de manera eficiente, respetando el cronograma y el tiempo asignado...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Demuestra un conocimiento profundo y actualizado del contenido temático...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Diseña instrumentos de evaluación alineados con los objetivos de aprendizaje...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Se expresa con claridad y precisión, utilizando un lenguaje técnico adecuado...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Fomenta un ambiente participativo y de respeto. Gestiona eficazmente...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Utiliza metodologías activas e innovadoras acordes al contexto y perfil...</th>
-                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Integra de manera efectiva las TICs para el desarrollo del proceso...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Demuestra compromiso con la enseñanza...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Organiza la clase de manera eficiente...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Demuestra un conocimiento profundo...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Diseña instrumentos de evaluación...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Se expresa con claridad y precisión...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Fomenta un ambiente participativo...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Utiliza metodologías activas...</th>
+                                    <th class="w-[150px] border border-gray-300 p-1 font-normal text-left align-top">Integra de manera efectiva las TICs...</th>
                                 </tr>
                             </thead>
                             <tbody id="cuerpoMatrizEstudiante" class="divide-y divide-gray-300">
@@ -194,7 +193,6 @@
         </section>
 
         <section id="vista-admin" class="role-view hidden space-y-6">
-            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-white rounded-lg shadow p-6 border-l-4 border-red-600 lg:col-span-2">
                     <div class="flex justify-between items-center mb-2">
@@ -202,7 +200,6 @@
                         <button onclick="cerrarSesionAdmin()" class="bg-gray-600 hover:bg-gray-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow transition md:hidden">🔒 Salir</button>
                     </div>
                     <p class="text-xs text-gray-500 mb-4">Defina los rangos de tiempo permitidos para que los estudiantes realicen la evaluación en cada área.</p>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-gray-50 p-3 rounded border border-gray-200">
                             <h3 class="text-xs font-bold text-indigo-900 mb-2 uppercase">Área Subdirección</h3>
@@ -217,7 +214,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="bg-gray-50 p-3 rounded border border-gray-200">
                             <h3 class="text-xs font-bold text-indigo-900 mb-2 uppercase">Área Gestión Académica</h3>
                             <div class="space-y-2">
@@ -245,7 +241,6 @@
                         <button onclick="cerrarSesionAdmin()" class="hidden md:block bg-gray-600 hover:bg-gray-700 text-white text-[10px] font-bold py-1 px-2 rounded shadow transition">🔒 Cerrar Sesión</button>
                     </div>
                     <p class="text-[11px] text-gray-500 mb-3">Modifique sus credenciales de acceso personales.</p>
-                    
                     <form onsubmit="actualizarCredencialesAdmin(event)" class="space-y-2.5">
                         <div>
                             <label class="block text-[10px] font-bold text-gray-700 uppercase">Mi Usuario Actual:</label>
@@ -266,7 +261,6 @@
                 <h2 class="text-xl font-semibold text-gray-800 mb-2">Gestión de Administradores Adicionales</h2>
                 <p class="text-xs text-gray-500 mb-4">Autorice cuentas adicionales e independientes con privilegios administrativos para gestionar la plataforma.</p>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    
                     <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 shadow-sm">
                         <h3 class="text-xs font-bold text-cyan-900 mb-3 uppercase tracking-wider">Crear Cuenta de Co-Administrador</h3>
                         <form onsubmit="registrarAdminAdicional(event)" class="space-y-3">
@@ -287,7 +281,6 @@
                             </button>
                         </form>
                     </div>
-
                     <div class="lg:col-span-2 overflow-hidden">
                         <h3 class="text-xs font-bold text-gray-700 mb-3 uppercase tracking-wider">Nómina de Cuentas Administrativas Activas</h3>
                         <div class="overflow-x-auto max-h-[220px] border border-gray-200 rounded">
@@ -300,8 +293,7 @@
                                         <th class="p-2 border border-gray-200 text-center">Acción</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tablaAdminCuentas" class="divide-y divide-gray-200">
-                                </tbody>
+                                <tbody id="tablaAdminCuentas" class="divide-y divide-gray-200"></tbody>
                             </table>
                         </div>
                     </div>
@@ -340,8 +332,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Curso / Promoción Asignado:</label>
-                            <select id="newDocenteCurso" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200">
-                            </select>
+                            <select id="newDocenteCurso" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-200"></select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Asignatura / Materia:</label>
@@ -362,17 +353,14 @@
                 <div class="bg-white rounded-lg shadow p-6 border-l-4 border-amber-500">
                     <h2 class="text-xl font-semibold text-gray-800 mb-2">Gestión de Cursos / Promociones</h2>
                     <p class="text-xs text-gray-500 mb-4">Agregue o elimine los cursos disponibles en el sistema.</p>
-                    
                     <form id="cursoForm" onsubmit="agregarCurso(event)" class="flex gap-2 mb-4">
                         <input type="text" id="newCursoNombre" required placeholder="Ej. Curso de ascenso Subteniente P.P." class="w-full p-2 text-sm border border-gray-300 rounded focus:ring focus:ring-amber-200">
                         <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 rounded text-sm transition">
                             +Añadir
                         </button>
                     </form>
-
                     <div class="max-h-[180px] overflow-y-auto border border-gray-200 rounded">
-                        <ul id="listaCursosAdmin" class="divide-y divide-gray-200 text-sm">
-                        </ul>
+                        <ul id="listaCursosAdmin" class="divide-y divide-gray-200 text-sm"></ul>
                     </div>
                 </div>
             </div>
@@ -390,7 +378,6 @@
                             <label class="block text-xs font-medium text-gray-700">Nombres Completos:</label>
                             <input type="text" id="matEstuNombre" required placeholder="Ej. Juan Carlos López" class="w-full p-2 text-xs border border-gray-300 rounded">
                         </div>
-                        
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Asignar Áreas Permitidas:</label>
                             <div class="grid grid-cols-2 gap-2 text-xs">
@@ -404,11 +391,9 @@
                                 </label>
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Asignar Cursos (Selección Múltiple):</label>
-                            <div id="contenedorCheckboxesCursosAdmin" class="max-h-[120px] overflow-y-auto border border-gray-200 p-2 rounded bg-slate-50 space-y-1.5 text-xs">
-                            </div>
+                            <div id="contenedorCheckboxesCursosAdmin" class="max-h-[120px] overflow-y-auto border border-gray-200 p-2 rounded bg-slate-50 space-y-1.5 text-xs"></div>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-700">Contraseña Temporal:</label>
@@ -456,7 +441,6 @@
                         </button>
                     </div>
                 </div>
-                
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
@@ -477,19 +461,40 @@
                                 <th class="p-3 border border-gray-700 text-center">Acción</th>
                             </tr>
                         </thead>
-                        <tbody id="tablaAdminDocentes" class="divide-y divide-gray-200 text-sm text-gray-700">
-                        </tbody>
+                        <tbody id="tablaAdminDocentes" class="divide-y divide-gray-200 text-sm text-gray-700"></tbody>
                     </table>
                 </div>
             </div>
         </section>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { 
+            getFirestore, collection, doc, setDoc, getDoc, getDocs, 
+            addDoc, deleteDoc, updateDoc, query, where, onSnapshot 
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Tus credenciales reales proporcionadas
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvUokcoQ4aMcOU8yNP0ydhC_awPnBP0Vg",
+            authDomain: "sistema-evaluaci.firebaseapp.com",
+            projectId: "sistema-evaluaci",
+            storageBucket: "sistema-evaluaci.firebasestorage.app",
+            messagingSenderId: "676634538346",
+            appId: "1:676634538346:web:a88b055fae442bcc1f3513",
+            measurementId: "G-EQTPWJT5RZ"
+        };
+
+        // Inicializar Firebase e Instancia Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Variables de estado local compartidas de la UI
         let areaSeleccionadaEstudiante = "";
         let cursoFiltroEstudianteSeleccionado = "";
-        let isAdminAutenticado = false; 
-        let estudianteSesionActiva = null; 
+        let isAdminAutenticado = false;
+        let estudianteSesionActiva = null;
 
         const opcionesLikert = [
             { texto: "Excelente", valor: 5 },
@@ -499,42 +504,75 @@
             { texto: "Muy Deficiente", valor: 1 }
         ];
 
-        // Inicialización de LocalStorage y Credenciales Maestras
-        if (!localStorage.getItem('adminCredenciales')) {
-            localStorage.setItem('adminCredenciales', JSON.stringify({
-                usuario: "0202382636",
-                password: "AdmiMoodle2026"
-            }));
-        }
-        if (!localStorage.getItem('adminsAdicionales')) {
-            localStorage.setItem('adminsAdicionales', JSON.stringify([]));
-        }
-        if (!localStorage.getItem('cursos')) {
-            const cursosIniciales = [
-                "Curso de ascenso Capitán de Servicio",
-                "Curso de ascenso Teniente de Servicios",
-                "Curso de ascenso Subteniente P.P."
-            ];
-            localStorage.setItem('cursos', JSON.stringify(cursosIniciales));
-        }
-        if (!localStorage.getItem('docentes')) localStorage.setItem('docentes', JSON.stringify([]));
-        if (!localStorage.getItem('estudiantes')) localStorage.setItem('estudiantes', JSON.stringify([]));
-        if (!localStorage.getItem('evaluaciones')) localStorage.setItem('evaluaciones', JSON.stringify([]));
-        if (!localStorage.getItem('fechasHabilitacion')) {
-            localStorage.setItem('fechasHabilitacion', JSON.stringify({
-                subdirección: { inicio: "", fin: "" },
-                gestiónAcadémica: { inicio: "", fin: "" }
-            }));
+        // Inicialización Estructuras Base en Firestore si están vacías
+        async function garantizarEstructurasBase() {
+            const adminRef = doc(db, "configuracion", "adminCredenciales");
+            const snapAdmin = await getDoc(adminRef);
+            if (!snapAdmin.exists()) {
+                await setDoc(adminRef, { usuario: "0202382636", password: "AdmiMoodle2026" });
+            }
+
+            const fechasRef = doc(db, "configuracion", "fechasHabilitacion");
+            const snapFechas = await getDoc(fechasRef);
+            if (!snapFechas.exists()) {
+                await setDoc(fechasRef, {
+                    subdirección: { inicio: "", fin: "" },
+                    gestiónAcadémica: { inicio: "", fin: "" }
+                });
+            }
+
+            const cursosSnap = await getDocs(collection(db, "cursos"));
+            if (cursosSnap.empty) {
+                const predeterminados = [
+                    "Curso de ascenso Capitán de Servicio", 
+                    "Curso de ascenso Teniente de Servicios", 
+                    "Curso de ascenso Subteniente P.P."
+                ];
+                for (const c of predeterminados) {
+                    await addDoc(collection(db, "cursos"), { nombre: c });
+                }
+            }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            actualizarVistas();
-            cargarFechasEnAdmin();
-            cargarInputsCredencialesAdmin();
-        });
+        // ================= SUSHUCRIPCIONES EN TIEMPO REAL (FIRESTORE LISTENERS) =================
+        function activarListenersRealtime() {
+            // Escuchar Cursos
+            onSnapshot(collection(db, "cursos"), (snapshot) => {
+                const cursos = [];
+                snapshot.forEach(doc => cursos.push({ id: doc.id, ...doc.data() }));
+                renderizarCursosAdmin(cursos);
+                renderizarSelectoresCurso(cursos);
+            });
 
-        // ==================== LÓGICA DE ROLES Y RENDERIZADO ====================
-        function solicitarAccesoRol(rol) {
+            // Escuchar Estudiantes
+            onSnapshot(collection(db, "estudiantes"), (snapshot) => {
+                const estudiantes = [];
+                snapshot.forEach(doc => estudiantes.push({ id: doc.id, ...doc.data() }));
+                renderizarEstudiantesAdmin(estudiantes);
+            });
+
+            // Escuchar Docentes y Evaluaciones de Forma Combinada
+            onSnapshot(collection(db, "docentes"), async (snapshotDocentes) => {
+                const docentes = [];
+                snapshotDocentes.forEach(doc => docentes.push({ id: doc.id, ...doc.data() }));
+                
+                const snapEval = await getDocs(collection(db, "evaluaciones"));
+                const evaluaciones = [];
+                snapEval.forEach(d => evaluaciones.push(d.data()));
+                
+                renderizarDocentesAdmin(docentes, evaluaciones);
+            });
+
+            // Escuchar Administradores Adicionales
+            onSnapshot(collection(db, "adminsAdicionales"), (snapshot) => {
+                const admins = [];
+                snapshot.forEach(doc => admins.push({ id: doc.id, ...doc.data() }));
+                renderizarAdminsAdicionales(admins);
+            });
+        }
+
+        // ================= VISTAS Y ROLES SELECTION =================
+        window.solicitarAccesoRol = function(rol) {
             if (rol === 'admin') {
                 if (isAdminAutenticado) {
                     mostrarSeccion('vista-admin');
@@ -556,431 +594,122 @@
         function mostrarSeccion(idSeccion) {
             document.querySelectorAll('.role-view').forEach(view => view.classList.add('hidden'));
             document.getElementById(idSeccion).classList.remove('hidden');
-            actualizarVistas();
         }
 
-        // ==================== ACCESOS / SEGURIDAD DEL ADMINISTRADOR ====================
-        function autenticarAdministrador(e) {
+        // ================= AUTENTICACIONES =================
+        window.autenticarAdministrador = async function(e) {
             e.preventDefault();
             const usuarioInput = document.getElementById("loginAdminUsuario").value.trim();
             const contrasenaInput = document.getElementById("loginAdminPassword").value;
 
-            const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
+            const credsMaestras = (await getDoc(doc(db, "configuracion", "adminCredenciales"))).data();
             let accesoConcedido = (usuarioInput === credsMaestras.usuario && contrasenaInput === credsMaestras.password);
 
             if (!accesoConcedido) {
-                const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
-                const subAdmin = adminsAdicionales.find(a => a.usuario === usuarioInput && a.password === contrasenaInput);
-                if (subAdmin) accesoConcedido = true;
+                const q = query(collection(db, "adminsAdicionales"), where("usuario", "==", usuarioInput), where("password", "==", contrasenaInput));
+                const snapSub = await getDocs(q);
+                if (!snapSub.empty) accesoConcedido = true;
             }
 
             if (accesoConcedido) {
                 isAdminAutenticado = true;
                 document.getElementById("errorLoginAdmin").classList.add("hidden");
                 mostrarSeccion('vista-admin');
+                cargarFechasEnAdmin();
+                cargarInputsCredencialesAdmin();
             } else {
-                isAdminAutenticado = false;
                 document.getElementById("errorLoginAdmin").classList.remove("hidden");
             }
         }
 
-        function cargarInputsCredencialesAdmin() {
-            const creds = JSON.parse(localStorage.getItem('adminCredenciales'));
-            document.getElementById("nuevoAdminUser").value = creds.usuario;
-            document.getElementById("nuevoAdminPass").value = creds.password;
-        }
-
-        function actualizarCredencialesAdmin(e) {
-            e.preventDefault();
-            const nuevoUser = document.getElementById("nuevoAdminUser").value.trim();
-            const nuevoPass = document.getElementById("nuevoAdminPass").value;
-
-            if(!nuevoUser || nuevoPass.length < 6) {
-                alert("Por favor ingrese parámetros válidos (Contraseña mínima de 6 caracteres).");
-                return;
-            }
-
-            const nuevasCreds = { usuario: nuevoUser, password: nuevoPass };
-            localStorage.setItem('adminCredenciales', JSON.stringify(nuevasCreds));
-            alert("🔒 Tus credenciales principales han sido actualizadas con éxito.");
-            cargarInputsCredencialesAdmin();
-            actualizarVistas();
-        }
-
-        // ==================== GESTIÓN DE ADMINISTRADORES ADICIONALES ====================
-        function registrarAdminAdicional(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("addAdminNombre").value.trim();
-            const usuario = document.getElementById("addAdminUser").value.trim();
-            const password = document.getElementById("addAdminPass").value;
-
-            if (!nombre || !usuario || password.length < 6) {
-                alert("Complete los datos de forma correcta. La contraseña requiere mínimo 6 caracteres.");
-                return;
-            }
-
-            const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
-            const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
-
-            if (usuario === credsMaestras.usuario || adminsAdicionales.some(a => a.usuario === usuario)) {
-                alert("El nombre de usuario ya se encuentra registrado en el sistema. Ingrese uno diferente.");
-                return;
-            }
-
-            adminsAdicionales.push({ id: "ADM-" + Date.now(), nombre, usuario, password });
-            localStorage.setItem('adminsAdicionales', JSON.stringify(adminsAdicionales));
-            
-            alert(`✅ El Administrador Adicional "${nombre}" ha sido habilitado con éxito.`);
-            document.getElementById("addAdminNombre").value = "";
-            document.getElementById("addAdminUser").value = "";
-            document.getElementById("addAdminPass").value = "";
-            
-            actualizarVistas();
-        }
-
-        function removerAdminAdicional(idAdmin) {
-            if (confirm("¿Está seguro que desea revocar los privilegios de acceso para esta cuenta administrativa?")) {
-                let adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
-                adminsAdicionales = adminsAdicionales.filter(a => a.id !== idAdmin);
-                localStorage.setItem('adminsAdicionales', JSON.stringify(adminsAdicionales));
-                actualizarVistas();
-            }
-        }
-
-        function cancelarLoginAdmin() {
+        window.cancelarLoginAdmin = function() {
             document.getElementById("roleSelector").value = "estudiante";
             solicitarAccesoRol("estudiante");
         }
 
-        function cerrarSesionAdmin() {
-            isAdminAutenticado = false;
-            document.getElementById("roleSelector").value = "estudiante";
-            alert("Sesión de administrador cerrada.");
-            solicitarAccesoRol("estudiante");
-        }
-
-        // ==================== AUTENTICACIÓN ESTUDIANTE ====================
-        function autenticarEstudiante(e) {
+        window.autenticarEstudiante = async function(e) {
             e.preventDefault();
-            const cedula = document.getElementById("loginEstuCedula").value.trim();
-            const password = document.getElementById("loginEstuPassword").value;
+            const cedulaInput = document.getElementById("loginEstuCedula").value.trim();
+            const passwordInput = document.getElementById("loginEstuPassword").value;
 
-            const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
-            const estu = estudiantes.find(e => e.cedula === cedula && e.password === password);
-
-            if (estu) {
+            const studentDoc = await getDoc(doc(db, "estudiantes", cedulaInput));
+            
+            if (studentDoc.exists() && studentDoc.data().password === passwordInput) {
+                const datosEstu = studentDoc.data();
                 document.getElementById("errorLoginEstu").classList.add("hidden");
-                estudianteSesionActiva = estu;
-                
-                if (estu.esTemporal) {
-                    document.getElementById("nuevaPassword").value = "";
-                    document.getElementById("confirmarNuevaPassword").value = "";
-                    document.getElementById("errorCambioPassword").classList.add("hidden");
+                estudianteSesionActiva = { cedula: studentDoc.id, ...datosEstu };
+
+                if (datosEstu.requiereCambioPassword) {
                     mostrarSeccion('vista-cambio-password');
                 } else {
-                    document.getElementById("nombreEstudianteActivo").innerText = estu.nombre;
-                    
-                    // LÓGICA DE CONTROL DE ÁREA: Bloquear/Habilitar botones visuales del Alumno
-                    const btnSub = document.getElementById("btnAreaSub");
-                    const btnGest = document.getElementById("btnAreaGest");
-                    
-                    // Restablecer por defecto
-                    btnSub.disabled = true;
-                    btnGest.disabled = true;
-                    btnSub.style.opacity = "0.3";
-                    btnSub.style.cursor = "not-allowed";
-                    btnGest.style.opacity = "0.3";
-                    btnGest.style.cursor = "not-allowed";
-
-                    // Habilitar según áreas autorizadas
-                    if(estu.areasPermitidas && estu.areasPermitidas.includes("Subdirección")) {
-                        btnSub.disabled = false;
-                        btnSub.style.opacity = "1";
-                        btnSub.style.cursor = "pointer";
-                    }
-                    if(estu.areasPermitidas && estu.areasPermitidas.includes("Gestión académica")) {
-                        btnGest.disabled = false;
-                        btnGest.style.opacity = "1";
-                        btnGest.style.cursor = "pointer";
-                    }
-
-                    mostrarSeccion('vista-estudiante-panel');
+                    entrarPanelEstudiante();
                 }
             } else {
                 document.getElementById("errorLoginEstu").classList.remove("hidden");
             }
         }
 
-        function procesarCambioContrasena(e) {
+        window.procesarCambioContrasena = async function(e) {
             e.preventDefault();
             const nueva = document.getElementById("nuevaPassword").value;
-            const confirma = document.getElementById("confirmarNuevaPassword").value;
+            const confirmar = document.getElementById("confirmarNuevaPassword").value;
 
-            if (nueva !== confirma) {
+            if (nueva !== confirmar) {
                 document.getElementById("errorCambioPassword").classList.remove("hidden");
                 return;
             }
 
-            let estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
-            estudiantes = estudiantes.map(estu => {
-                if (estu.cedula === estudianteSesionActiva.cedula) {
-                    estu.password = nueva;
-                    estu.esTemporal = false; 
-                    estudianteSesionActiva = estu; 
-                }
-                return estu;
+            document.getElementById("errorCambioPassword").classList.add("hidden");
+            await updateDoc(doc(db, "estudiantes", estudianteSesionActiva.cedula), {
+                password: nueva,
+                requiereCambioPassword: false
             });
 
-            localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
-            alert("Contraseña actualizada correctamente. ¡Ya puede proceder con su evaluación!");
-            
-            // Re-ejecutar lógica de bloqueo de botones
-            const btnSub = document.getElementById("btnAreaSub");
-            const btnGest = document.getElementById("btnAreaGest");
-            btnSub.disabled = !estudianteSesionActiva.areasPermitidas.includes("Subdirección");
-            btnGest.disabled = !estudianteSesionActiva.areasPermitidas.includes("Gestión académica");
-            btnSub.style.opacity = btnSub.disabled ? "0.3" : "1";
-            btnGest.style.opacity = btnGest.disabled ? "0.3" : "1";
+            estudianteSesionActiva.requiereCambioPassword = false;
+            estudianteSesionActiva.password = nueva;
+            entrarPanelEstudiante();
+        }
 
+        function entrarPanelEstudiante() {
             document.getElementById("nombreEstudianteActivo").innerText = estudianteSesionActiva.nombre;
             mostrarSeccion('vista-estudiante-panel');
-        }
+            
+            // Habilitar o deshabilitar visualmente áreas autorizadas
+            const areasPermitidas = estudianteSesionActiva.areasPermitidas || [];
+            configurarBotonArea("btnAreaSub", areasPermitidas.includes("Subdirección"));
+            configurarBotonArea("btnAreaGest", areasPermitidas.includes("Gestión académica"));
 
-        function cerrarSesionEstudiante() {
-            estudianteSesionActiva = null;
-            areaSeleccionadaEstudiante = "";
-            cursoFiltroEstudianteSeleccionado = "";
-            document.getElementById("loginEstuCedula").value = "";
-            document.getElementById("loginEstuPassword").value = "";
+            document.getElementById("alertaFechaBloqueo").classList.add("hidden");
             document.getElementById("contenedorSelectorCursoEstudiante").classList.add("hidden");
             document.getElementById("evalForm").classList.add("hidden");
-            mostrarSeccion('vista-login-estudiante');
+            areaSeleccionadaEstudiante = "";
         }
 
-        // ==================== MATRICULACIÓN DE ESTUDIANTES MULTI-CURSO Y ÁREA ====================
-        function matricularEstudiante(e) {
-            e.preventDefault();
-            const cedula = document.getElementById("matEstuCedula").value.trim();
-            const nombre = document.getElementById("matEstuNombre").value.trim();
-            const password = document.getElementById("matEstuPassword").value;
-
-            // 1. Obtener Áreas marcadas
-            const areasSeleccionadas = [];
-            if(document.getElementById("matEstuAreaSub").checked) areasSeleccionadas.push("Subdirección");
-            if(document.getElementById("matEstuAreaGest").checked) areasSeleccionadas.push("Gestión académica");
-
-            if(areasSeleccionadas.length === 0) {
-                alert("Debe asignar al menos un área de acceso permitida para el estudiante.");
-                return;
-            }
-
-            // 2. Obtener Cursos marcados
-            const checkboxesCursos = document.querySelectorAll(".check-curso-matricula:checked");
-            if (checkboxesCursos.length === 0) {
-                alert("Debe seleccionar al menos un curso/promoción para matricular al estudiante.");
-                return;
-            }
-            const cursosAsignados = Array.from(checkboxesCursos).map(cb => cb.value);
-
-            const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
-            if (estudiantes.some(e => e.cedula === cedula)) {
-                alert("Esta cédula ya se encuentra registrada como estudiante.");
-                return;
-            }
-
-            estudiantes.push({
-                cedula,
-                nombre,
-                areasPermitidas: areasSeleccionadas, // Guardar áreas asignadas
-                cursos: cursosAsignados, 
-                password,
-                esTemporal: true 
-            });
-
-            localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
-            alert(`Estudiante matriculado con éxito.`);
-            document.getElementById("estudianteMatriculaForm").reset();
-            document.getElementById("matEstuAreaSub").checked = true;
-            document.getElementById("matEstuAreaGest").checked = true;
-            actualizarVistas();
-        }
-
-        function desmatricularEstudiante(cedula) {
-            if (confirm(`¿Desea eliminar de la nómina al estudiante con cédula ${cedula}?`)) {
-                let estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
-                estudiantes = estudiantes.filter(e => e.cedula !== cedula);
-                localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
-                actualizarVistas();
-            }
-        }
-
-        // ==================== LÓGICA DE FILTRADO Y MATRIZ ESTUDIANTE ====================
-        function seleccionarAreaEstudiante(area) {
-            // Validación redundante de seguridad en la selección del área
-            if(!estudianteSesionActiva.areasPermitidas.includes(area)) {
-                alert("No tiene permisos para acceder a esta área.");
-                return;
-            }
-
-            areaSeleccionadaEstudiante = area;
-            cursoFiltroEstudianteSeleccionado = ""; 
-            
-            const btnSub = document.getElementById("btnAreaSub");
-            const btnGest = document.getElementById("btnAreaGest");
-            
-            if(area === 'Subdirección') {
-                btnSub.className = "flex-1 md:flex-none bg-indigo-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-200 text-center uppercase tracking-wide border border-indigo-950";
-                if(estudianteSesionActiva.areasPermitidas.includes("Gestión académica")) {
-                    btnGest.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
-                }
+        function configurarBotonArea(idBtn, permitido) {
+            const btn = document.getElementById(idBtn);
+            if (permitido) {
+                btn.disabled = false;
+                btn.className = "flex-1 md:flex-none bg-indigo-50 text-indigo-900 border-2 border-indigo-500 hover:bg-indigo-900 hover:text-white font-bold py-3 px-8 rounded-lg shadow cursor-pointer transition-all uppercase text-sm";
             } else {
-                btnGest.className = "flex-1 md:flex-none bg-indigo-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-200 text-center uppercase tracking-wide border border-indigo-950";
-                if(estudianteSesionActiva.areasPermitidas.includes("Subdirección")) {
-                    btnSub.className = "flex-1 md:flex-none bg-gray-200 text-gray-700 hover:bg-indigo-800 hover:text-white font-bold py-3 px-8 rounded-lg shadow transition-all duration-200 text-center uppercase tracking-wide border border-gray-300";
-                }
-            }
-
-            const habilitado = verificarHabilitacionArea(area);
-            if (habilitado) {
-                document.getElementById("areaSeleccionadaBadge").innerText = area.toUpperCase();
-                poblarSelectorCursosEstudiante();
+                btn.disabled = true;
+                btn.className = "flex-1 md:flex-none bg-gray-200 text-gray-400 border border-gray-300 font-bold py-3 px-8 rounded-lg opacity-50 cursor-not-allowed uppercase text-sm";
             }
         }
 
-        function poblarSelectorCursosEstudiante() {
-            const contenedor = document.getElementById("contenedorSelectorCursoEstudiante");
-            const select = document.getElementById("selectCursoFiltroEstudiante");
-            document.getElementById("evalForm").classList.add("hidden");
-
-            if (!estudianteSesionActiva || !estudianteSesionActiva.cursos || estudianteSesionActiva.cursos.length === 0) {
-                select.innerHTML = '<option value="">El estudiante no posee cursos asignados</option>';
-                contenedor.classList.remove("hidden");
-                return;
-            }
-
-            select.innerHTML = '<option value="">-- Seleccione el Curso a Evaluar --</option>';
-            estudianteSesionActiva.cursos.forEach(curso => {
-                select.innerHTML += `<option value="${curso}">${curso}</option>`;
-            });
-
-            contenedor.classList.remove("hidden");
-        }
-
-        function cambiarCursoFiltroEstudiante(cursoSeleccionado) {
-            cursoFiltroEstudianteSeleccionado = cursoSeleccionado;
-            if (!cursoSeleccionado) {
-                document.getElementById("evalForm").classList.add("hidden");
-                return;
-            }
-            document.getElementById("cursoEstudianteBadge").innerText = cursoSeleccionado.toUpperCase();
-            generarMatrizEvaluacion(cursoSeleccionado);
-        }
-
-        function generarMatrizEvaluacion(cursoSeleccionado) {
-            const form = document.getElementById("evalForm");
-            const cuerpo = document.getElementById("cuerpoMatrizEstudiante");
-            cuerpo.innerHTML = "";
-
-            if (!cursoSeleccionado || !areaSeleccionadaEstudiante) {
-                form.classList.add("hidden");
-                return;
-            }
-
-            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-            const docentesFiltrados = listaDocentes.filter(d => d.curso === cursoSeleccionado && d.area === areaSeleccionadaEstudiante);
-
-            if (docentesFiltrados.length === 0) {
-                cuerpo.innerHTML = `<tr><td colspan="12" class="p-4 text-center text-red-500 font-bold">No existen docentes registrados bajo el área de ${areaSeleccionadaEstudiante} para este curso.</td></tr>`;
-                form.classList.remove("hidden");
-                return;
-            }
-
-            docentesFiltrados.forEach((doc) => {
-                let fila = document.createElement("tr");
-                fila.className = "align-middle border-b border-gray-300";
-
-                let htmlDatosBase = `
-                    <td class="p-2 border border-gray-300 bg-amber-50 font-medium text-xs text-amber-950">${doc.asignatura}</td>
-                    <td class="p-2 border border-gray-300 text-xs text-center">${doc.grado}</td>
-                    <td class="p-2 border border-gray-300 text-xs font-mono">${doc.cedula}</td>
-                    <td class="p-2 border border-gray-300 font-medium text-xs">${doc.nombre} <span class="text-gray-400 text-[10px]">(${doc.paralelo})</span></td>
-                `;
-
-                let htmlCriterios = "";
-                for (let c = 1; c <= 8; c++) {
-                    htmlCriterios += `<td class="p-1 border border-gray-300 bg-white">`;
-                    opcionesLikert.forEach(op => {
-                        htmlCriterios += `
-                            <label class="opcion-likert cursor-pointer">
-                                <span class="text-gray-600">${op.texto}</span>
-                                <input type="radio" name="doc_${doc.id}_crit_${c}" value="${op.valor}" required class="w-3 h-3 text-blue-600 focus:ring-0">
-                            </label>
-                        `;
-                    });
-                    htmlCriterios += `</td>`;
-                }
-
-                fila.innerHTML = htmlDatosBase + htmlCriterios;
-                cuerpo.appendChild(fila);
-            });
-
-            form.classList.remove("hidden");
-        }
-
-        function guardarEvaluacionMatriz(e) {
-            e.preventDefault();
-
-            if (!verificarHabilitacionArea(areaSeleccionadaEstudiante)) {
-                alert("El tiempo de entrega ha expirado.");
-                return;
-            }
-
-            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-            const docentesFiltrados = listaDocentes.filter(d => d.curso === cursoFiltroEstudianteSeleccionado && d.area === areaSeleccionadaEstudiante);
-            const evals = JSON.parse(localStorage.getItem('evaluaciones'));
-
-            docentesFiltrados.forEach(doc => {
-                let sumaPuntos = 0;
-                for (let c = 1; c <= 8; c++) {
-                    const selector = document.querySelector(`input[name="doc_${doc.id}_crit_${c}"]:checked`);
-                    if (selector) sumaPuntos += parseInt(selector.value);
-                }
-
-                const promedio = ((sumaPuntos / 40) * 100).toFixed(1);
-                const nota = ((sumaPuntos / 40) * 7).toFixed(2);
-
-                evals.push({
-                    id: "EVAL-" + Date.now() + "-" + doc.id,
-                    estudiante: estudianteSesionActiva.cedula,
-                    estudianteNombre: estudianteSesionActiva.nombre,
-                    area: areaSeleccionadaEstudiante,
-                    docenteId: doc.id,
-                    promedio: parseFloat(promedio),
-                    nota: parseFloat(nota)
-                });
-            });
-
-            localStorage.setItem('evaluaciones', JSON.stringify(evals));
-            alert(`¡Evaluación guardada exitosamente!`);
-            
-            document.getElementById("evalForm").classList.add("hidden");
-            document.getElementById("selectCursoFiltroEstudiante").value = "";
-            cursoFiltroEstudianteSeleccionado = "";
-        }
-
-        // ==================== OPERACIONES DEL ADMINISTRADOR ====================
-        function cargarFechasEnAdmin() {
-            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
-            if(fechas) {
-                document.getElementById("fechaInicioSub").value = fechas.subdirección.inicio || "";
-                document.getElementById("fechaFinSub").value = fechas.subdirección.fin || "";
-                document.getElementById("fechaInicioGest").value = fechas.gestiónAcadémica.inicio || "";
-                document.getElementById("fechaFinGest").value = fechas.gestiónAcadémica.fin || "";
+        // ================= CONFIGURACIÓN CRONOGRAMA Y CUENTA =================
+        async function cargarFechasEnAdmin() {
+            const snap = await getDoc(doc(db, "configuracion", "fechasHabilitacion"));
+            if (snap.exists()) {
+                const data = snap.data();
+                document.getElementById("fechaInicioSub").value = data.subdirección?.inicio || "";
+                document.getElementById("fechaFinSub").value = data.subdirección?.fin || "";
+                document.getElementById("fechaInicioGest").value = data.gestiónAcadémica?.inicio || "";
+                document.getElementById("fechaFinGest").value = data.gestiónAcadémica?.fin || "";
             }
         }
 
-        function guardarFechasHabilitacion() {
-            const fechas = {
+        window.guardarFechasHabilitacion = async function() {
+            await setDoc(doc(db, "configuracion", "fechasHabilitacion"), {
                 subdirección: {
                     inicio: document.getElementById("fechaInicioSub").value,
                     fin: document.getElementById("fechaFinSub").value
@@ -989,78 +718,58 @@
                     inicio: document.getElementById("fechaInicioGest").value,
                     fin: document.getElementById("fechaFinGest").value
                 }
-            };
-            localStorage.setItem('fechasHabilitacion', JSON.stringify(fechas));
-            alert("Cronograma de habilitación temporal guardado con éxito.");
+            });
+            alert("✅ Cronograma de accesos guardado con éxito.");
         }
 
-        function verificarHabilitacionArea(area) {
-            const fechas = JSON.parse(localStorage.getItem('fechasHabilitacion'));
-            const ahora = new Date();
-            
-            const llaveArea = area === 'Subdirección' ? 'subdirección' : 'gestiónAcadémica';
-            const configuracion = fechas[llaveArea];
-
-            const alertaBloqueo = document.getElementById("alertaFechaBloqueo");
-            const mensajeAlerta = document.getElementById("mensajeAlertaFecha");
-            const evalForm = document.getElementById("evalForm");
-            const contenedorSelector = document.getElementById("contenedorSelectorCursoEstudiante");
-
-            if (!configuracion.inicio || !configuracion.fin) {
-                alertaBloqueo.classList.add("hidden");
-                return true;
-            }
-
-            const fechaInicio = new Date(configuracion.inicio);
-            const fechaFin = new Date(configuracion.fin);
-
-            if (ahora < fechaInicio) {
-                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-amber-50 border-amber-300 text-amber-800";
-                mensajeAlerta.innerHTML = `⚠️ El proceso de evaluación para el área de <strong>${area}</strong> aún no se encuentra habilitado.<br><small>Disponible desde: ${fechaInicio.toLocaleString()}</small>`;
-                alertaBloqueo.classList.remove("hidden");
-                evalForm.classList.add("hidden");
-                contenedorSelector.classList.add("hidden");
-                return false;
-            } else if (ahora > fechaFin) {
-                alertaBloqueo.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-red-50 border-red-300 text-red-800";
-                mensajeAlerta.innerHTML = `🛑 El tiempo límite para evaluar el área de <strong>${area}</strong> ha finalizado el ${fechaFin.toLocaleString()}.`;
-                alertaBloqueo.classList.remove("hidden");
-                evalForm.classList.add("hidden");
-                contenedorSelector.classList.add("hidden");
-                return false;
-            }
-
-            alertaBloqueo.classList.add("hidden");
-            return true;
+        async function cargarInputsCredencialesAdmin() {
+            const creds = (await getDoc(doc(db, "configuracion", "adminCredentials"))).data() || { usuario: "0202382636" };
+            document.getElementById("nuevoAdminUser").value = creds.usuario || "0202382636";
+            document.getElementById("nuevoAdminPass").value = "";
         }
 
-        function agregarCurso(e) {
+        window.actualizarCredencialesAdmin = async function(e) {
             e.preventDefault();
-            const nombreCurso = document.getElementById("newCursoNombre").value.trim();
-            if (!nombreCurso) return;
-
-            const cursos = JSON.parse(localStorage.getItem('cursos'));
-            if (cursos.includes(nombreCurso)) {
-                alert("Este curso ya se encuentra registrado.");
-                return;
-            }
-
-            cursos.push(nombreCurso);
-            localStorage.setItem('cursos', JSON.stringify(cursos));
-            document.getElementById("cursoForm").reset();
-            actualizarVistas();
+            const nuevoUser = document.getElementById("nuevoAdminUser").value.trim();
+            const nuevoPass = document.getElementById("nuevoAdminPass").value;
+            await setDoc(doc(db, "configuracion", "adminCredenciales"), { usuario: nuevoUser, password: nuevoPass });
+            alert("✅ Credenciales maestras actualizadas correctamente.");
+            document.getElementById("nuevoAdminPass").value = "";
         }
 
-        function eliminarCurso(cursoNombre) {
-            if (confirm(`¿Está seguro de eliminar el curso "${cursoNombre}"?`)) {
-                let cursos = JSON.parse(localStorage.getItem('cursos'));
-                cursos = cursos.filter(c => c !== cursoNombre);
-                localStorage.setItem('cursos', JSON.stringify(cursos));
-                actualizarVistas();
+        // ================= GESTIÓN DE ELEMENTOS (ALTAS/BAJAS) =================
+        window.registrarAdminAdicional = async function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("addAdminNombre").value.trim();
+            const usuario = document.getElementById("addAdminUser").value.trim();
+            const password = document.getElementById("addAdminPass").value;
+
+            await addDoc(collection(db, "adminsAdicionales"), { nombre, usuario, password });
+            document.getElementById("addAdminNombre").value = "";
+            document.getElementById("addAdminUser").value = "";
+            document.getElementById("addAdminPass").value = "";
+        }
+
+        window.eliminarAdminAdicional = async function(id) {
+            if (confirm("¿Seguro que desea revocar accesos a este administrador auxiliar?")) {
+                await deleteDoc(doc(db, "adminsAdicionales", id));
             }
         }
 
-        function agregarNuevoDocente(e) {
+        window.agregarCurso = async function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("newCursoNombre").value.trim();
+            await addDoc(collection(db, "cursos"), { nombre });
+            document.getElementById("newCursoNombre").value = "";
+        }
+
+        window.eliminarCurso = async function(id) {
+            if (confirm("¿Desea eliminar esta promoción/curso?")) {
+                await deleteDoc(doc(db, "cursos", id));
+            }
+        }
+
+        window.agregarNuevoDocente = async function(e) {
             e.preventDefault();
             const area = document.getElementById("newDocenteArea").value;
             const cedula = document.getElementById("newDocenteCedula").value.trim();
@@ -1070,255 +779,413 @@
             const asignatura = document.getElementById("newDocenteAsignatura").value.trim();
             const paralelo = document.getElementById("newDocenteParalelo").value.trim().toUpperCase();
 
-            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-            listaDocentes.push({ id: Date.now(), area, cedula, grado, nombre, curso, asignatura, paralelo });
-            localStorage.setItem('docentes', JSON.stringify(listaDocentes));
-            
-            alert(`Docente asignado correctamente.`);
+            await addDoc(collection(db, "docentes"), { area, cedula, grado, nombre, curso, asignatura, paralelo });
             document.getElementById("docenteForm").reset();
-            actualizarVistas();
         }
 
-        function eliminarDocente(id) {
-            if (confirm("¿Desea dar de baja este registro docente?")) {
-                let listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-                listaDocentes = listaDocentes.filter(d => d.id !== id);
-                localStorage.setItem('docentes', JSON.stringify(listaDocentes));
-                
-                let evals = JSON.parse(localStorage.getItem('evaluaciones'));
-                evals = evals.filter(e => e.docenteId !== id);
-                localStorage.setItem('evaluaciones', JSON.stringify(evals));
-
-                actualizarVistas();
+        window.eliminarDocente = async function(id) {
+            if (confirm("¿Quitar docente de la nómina distributiva?")) {
+                await deleteDoc(doc(db, "docentes", id));
             }
         }
 
-        function seleccionarTodosDocentes(status) {
-            const checkboxes = document.querySelectorAll(".check-docente-item");
-            checkboxes.forEach(chk => chk.checked = status);
-        }
+        window.matricularEstudiante = async function(e) {
+            e.preventDefault();
+            const cedula = document.getElementById("matEstuCedula").value.trim();
+            const nombre = document.getElementById("matEstuNombre").value.trim();
+            const password = document.getElementById("matEstuPassword").value;
 
-        function eliminarDocentesMasivo() {
-            const checkboxes = document.querySelectorAll(".check-docente-item:checked");
-            if (checkboxes.length === 0) {
-                alert("Por favor, seleccione al menos un docente.");
+            const areasPermitidas = [];
+            if (document.getElementById("matEstuAreaSub").checked) areasPermitidas.push("Subdirección");
+            if (document.getElementById("matEstuAreaGest").checked) areasPermitidas.push("Gestión académica");
+
+            const checkboxes = document.querySelectorAll('.check-curso-matricula:checked');
+            const cursosAsignados = Array.from(checkboxes).map(cb => cb.value);
+
+            if (cursosAsignados.length === 0) {
+                alert("⚠️ Debe asignar al menos una promoción/curso al alumno.");
                 return;
             }
 
-            if (confirm(`⚠️ ¿Desea eliminar masivamente los ${checkboxes.length} registros seleccionados?`)) {
-                let listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-                let evals = JSON.parse(localStorage.getItem('evaluaciones'));
+            await setDoc(doc(db, "estudiantes", cedula), {
+                nombre,
+                password,
+                areasPermitidas,
+                cursosAsignados,
+                requiereCambioPassword: true
+            });
 
-                checkboxes.forEach(chk => {
-                    const docId = parseInt(chk.value);
-                    listaDocentes = listaDocentes.filter(d => d.id !== docId);
-                    evals = evals.filter(e => e.docenteId !== docId);
-                });
+            document.getElementById("estudianteMatriculaForm").reset();
+        }
 
-                localStorage.setItem('docentes', JSON.stringify(listaDocentes));
-                localStorage.setItem('evaluaciones', JSON.stringify(evals));
+        window.eliminarEstudiante = async function(cedula) {
+            if (confirm("¿Desmatricular permanentemente a este estudiante?")) {
+                await deleteDoc(doc(db, "estudiantes", cedula));
+            }
+        }
 
+        window.eliminarDocentesMasivo = async function() {
+            const checks = document.querySelectorAll('.check-docente-fila:checked');
+            if (checks.length === 0) {
+                alert("Seleccione al menos un docente de la lista global.");
+                return;
+            }
+            if (confirm(`¿Proceder a eliminar de forma masiva los ${checks.length} registros seleccionados?`)) {
+                for (const checkbox of checks) {
+                    await deleteDoc(doc(db, "docentes", checkbox.value));
+                }
                 document.getElementById("checkMasivoMaestro").checked = false;
-                alert("🗑️ Eliminación masiva completada con éxito.");
-                actualizarVistas();
             }
         }
 
-        function descargarExcelCSV() {
-            const evals = JSON.parse(localStorage.getItem('evaluaciones'));
-            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
+        // ================= OPERACIONES DE EXTRACCIÓN DE EVALUACIÓN ESTUDIANTE =================
+        window.seleccionarAreaEstudiante = async function(area) {
+            areaSeleccionadaEstudiante = area;
+            
+            // Validar Cronograma de Tiempos
+            const snapConfig = await getDoc(doc(db, "configuracion", "fechasHabilitacion"));
+            const configFechas = snapConfig.data();
+            const claveArea = area === "Subdirección" ? "subdirección" : "gestiónAcadémica";
+            const rango = configFechas?.[claveArea] || { inicio: "", fin: "" };
 
-            if(evals.length === 0) {
-                alert("No existen datos disponibles para el reporte.");
+            const containerAlerta = document.getElementById("alertaFechaBloqueo");
+            const txtAlerta = document.getElementById("mensajeAlertaFecha");
+
+            if (rango.inicio && rango.fin) {
+                const ahora = new Date();
+                const inicioDate = new Date(rango.inicio);
+                const finDate = new Date(rango.fin);
+
+                if (ahora < inicioDate || ahora > finDate) {
+                    containerAlerta.classList.remove("hidden");
+                    containerAlerta.className = "mb-6 p-4 rounded-lg border text-center font-medium bg-red-50 border-red-200 text-red-800";
+                    txtAlerta.innerHTML = `⚠️ El periodo para evaluar el área de <b>${area}</b> se encuentra cerrado.<br>Disponible desde: ${rango.inicio.replace('T',' ')} hasta ${rango.fin.replace('T',' ')}`;
+                    
+                    document.getElementById("contenedorSelectorCursoEstudiante").classList.add("hidden");
+                    document.getElementById("evalForm").classList.add("hidden");
+                    return;
+                }
+            }
+
+            containerAlerta.classList.add("hidden");
+            
+            // Rellenar selector de cursos autorizados del estudiante
+            const select = document.getElementById("selectCursoFiltroEstudiante");
+            select.innerHTML = '<option value="">-- Seleccione un Curso --</option>';
+            
+            const cursosEstu = estudianteSesionActiva.cursosAsignados || [];
+            cursosEstu.forEach(c => {
+                select.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+
+            document.getElementById("contenedorSelectorCursoEstudiante").classList.remove("hidden");
+            document.getElementById("evalForm").classList.add("hidden");
+        }
+
+        window.cambiarCursoFiltroEstudiante = async function(curso) {
+            cursoFiltroEstudianteSeleccionado = curso;
+            if (!curso) {
+                document.getElementById("evalForm").classList.add("hidden");
                 return;
             }
 
-            let csvContent = "\uFEFFsep=;\n"; 
-            csvContent += "Área;Cédula Estudiante;Nombres Estudiante;Cédula Docente;Grado Docente;Nombre Docente;Curso;Asignatura;Paralelo;Promedio Porcentual;Nota Final (Sobre 7)\n";
+            document.getElementById("areaSeleccionadaBadge").innerText = areaSeleccionadaEstudiante;
+            document.getElementById("cursoEstudianteBadge").innerText = curso;
+            document.getElementById("evalForm").classList.remove("hidden");
 
-            evals.forEach(e => {
-                const doc = listaDocentes.find(d => d.id === e.docenteId) || { 
-                    cedula: "N/A", nombre: "Eliminado", grado: "N/A", curso: "N/A", asignatura: "N/A", paralelo: "N/A" 
-                };
-                
-                const area = (e.area || "N/A").replace(/;/g, '');
-                const estudianteCedula = e.estudiante.replace(/;/g, '');
-                const estudianteNombre = (e.estudianteNombre || "N/A").replace(/;/g, '');
-                const cedulaDocente = doc.cedula.replace(/;/g, '');
-                const gradoDocente = doc.grado.replace(/;/g, '');
-                const nombreDocente = doc.nombre.replace(/;/g, '');
-                const curso = doc.curso.replace(/;/g, '');
-                const asignatura = doc.asignatura.replace(/;/g, '');
-                const paralelo = doc.paralelo.replace(/;/g, '');
-                
-                const promedio = e.promedio.toString().replace('.', ',');
-                const nota = e.nota.toString().replace('.', ',');
+            // Cargar docentes correspondientes
+            const q = query(collection(db, "docentes"), where("area", "==", areaSeleccionadaEstudiante), where("curso", "==", curso));
+            const snapDocentes = await getDocs(q);
+            const docentesFiltrados = [];
+            snapDocentes.forEach(d => docentesFiltrados.push({ id: d.id, ...d.data() }));
 
-                csvContent += `${area};${estudianteCedula};${estudianteNombre};${cedulaDocente};${gradoDocente};${nombreDocente};${curso};${asignatura};${paralelo};${promedio}%;${nota}\n`;
+            // Filtrar los que ya evaluó este estudiante en esta área
+            const qEval = query(collection(db, "evaluaciones"), 
+                where("cedulaEstudiante", "==", estudianteSesionActiva.cedula),
+                where("area", "==", areaSeleccionadaEstudiante)
+            );
+            const snapEval = await getDocs(qEval);
+            const idDocentesEvaluados = [];
+            snapEval.forEach(ev => idDocentesEvaluados.push(ev.data().idDocenteUnico));
+
+            const docentesPendientes = docentesFiltrados.filter(d => !idDocentesEvaluados.includes(d.id));
+            renderizarMatrizPreguntas(docentesPendientes);
+        }
+
+        function renderizarMatrizPreguntas(docentes) {
+            const tbody = document.getElementById("cuerpoMatrizEstudiante");
+            tbody.innerHTML = "";
+
+            if (docentes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="12" class="p-6 text-center text-gray-500 font-medium bg-gray-50">🎉 Ud. ha completado todas las evaluaciones asignadas a este curso y área de gestión.</td></tr>`;
+                return;
+            }
+
+            docentes.forEach((doc, idx) => {
+                let filasPreguntasHtml = "";
+                for (let p = 1; p <= 8; p++) {
+                    let opcionesHtml = "";
+                    opcionesLikert.forEach(opc => {
+                        opcionesHtml += `
+                            <label class="opcion-likert cursor-pointer">
+                                <span>${opc.texto}</span>
+                                <input type="radio" name="p_${doc.id}_${p}" value="${opc.valor}" required class="w-3.5 h-3.5 text-indigo-600 focus:ring-0">
+                            </label>`;
+                    });
+                    filasPreguntasHtml += `<td class="border border-gray-300 p-1 bg-slate-50/50"><div class="space-y-0.5">${opcionesHtml}</div></td>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50/80 transition">
+                        <td class="p-2 border border-gray-300 text-xs font-semibold text-gray-800">${doc.asignatura}</td>
+                        <td class="p-2 border border-gray-300 text-xs text-gray-600">${doc.grado}</td>
+                        <td class="p-2 border border-gray-300 text-xs font-mono text-gray-500">${doc.cedula}</td>
+                        <td class="p-2 border border-gray-300 text-xs font-bold text-indigo-950">${doc.nombre}</td>
+                        ${filasPreguntasHtml}
+                    </tr>`;
+            });
+        }
+
+        window.guardarEvaluacionMatriz = async function(e) {
+            e.preventDefault();
+
+            const q = query(collection(db, "docentes"), where("area", "==", areaSeleccionadaEstudiante), where("curso", "==", cursoFiltroEstudianteSeleccionado));
+            const snapDocentes = await getDocs(q);
+            const docentesFiltrados = [];
+            snapDocentes.forEach(d => docentesFiltrados.push({ id: d.id, ...d.data() }));
+
+            const qEval = query(collection(db, "evaluaciones"), 
+                where("cedulaEstudiante", "==", estudianteSesionActiva.cedula),
+                where("area", "==", areaSeleccionadaEstudiante)
+            );
+            const snapEval = await getDocs(qEval);
+            const idDocentesEvaluados = [];
+            snapEval.forEach(ev => idDocentesEvaluados.push(ev.data().idDocenteUnico));
+
+            const docentesPendientes = docentesFiltrados.filter(d => !idDocentesEvaluados.includes(d.id));
+
+            if (docentesPendientes.length === 0) return;
+
+            // Almacenar evaluaciones en Firestore
+            for (const d of docentesPendientes) {
+                const respuestas = [];
+                for (let p = 1; p <= 8; p++) {
+                    const selector = `input[name="p_${d.id}_${p}"]:checked`;
+                    const radio = document.querySelector(selector);
+                    if (radio) {
+                        respuestas.push(parseInt(radio.value));
+                    }
+                }
+
+                if (respuestas.length === 8) {
+                    await addDoc(collection(db, "evaluaciones"), {
+                        idDocenteUnico: d.id,
+                        cedulaEstudiante: estudianteSesionActiva.cedula,
+                        area: areaSeleccionadaEstudiante,
+                        curso: cursoFiltroEstudianteSeleccionado,
+                        respuestas: respuestas,
+                        fechaRegistro: new Date().toISOString()
+                    });
+                }
+            }
+
+            alert("✅ Evaluación cargada y transmitida con éxito.");
+            cambiarCursoFiltroEstudiante(cursoFiltroEstudianteSeleccionado);
+        }
+
+        // ================= RENDERS DE UI CON DATOS DESDE FIRESTORE = function =================
+        function renderizerCursosAdmin(cursos) {
+            const ul = document.getElementById("listaCursosAdmin");
+            ul.innerHTML = "";
+            cursos.forEach(c => {
+                ul.innerHTML += `
+                    <li class="flex justify-between items-center p-2.5 hover:bg-gray-50 transition">
+                        <span class="font-medium text-gray-700">${c.nombre}</span>
+                        <button onclick="eliminarCurso('${c.id}')" class="text-red-600 hover:text-red-800 font-bold text-xs p-1">Eliminar</button>
+                    </li>`;
+            });
+        }
+
+        function renderizarSelectoresCurso(cursos) {
+            const selectDocente = document.getElementById("newDocenteCurso");
+            selectDocente.innerHTML = "";
+            cursos.forEach(c => {
+                selectDocente.innerHTML += `<option value="${c.nombre}">${c.nombre}</option>`;
+            });
+
+            const divCheckboxes = document.getElementById("contenedorCheckboxesCursosAdmin");
+            divCheckboxes.innerHTML = "";
+            cursos.forEach((c, idx) => {
+                divCheckboxes.innerHTML += `
+                    <label class="flex items-center gap-2 bg-white p-1.5 border border-gray-200 rounded cursor-pointer hover:bg-gray-100">
+                        <input type="checkbox" value="${c.nombre}" class="check-curso-matricula w-3.5 h-3.5 text-emerald-600 rounded">
+                        <span>${c.nombre}</span>
+                    </label>`;
+            });
+        }
+
+        function renderizarAdminsAdicionales(admins) {
+            const tbody = document.getElementById("tablaAdminCuentas");
+            tbody.innerHTML = `
+                <tr class="bg-slate-50 font-bold">
+                    <td class="p-2 border border-gray-200 text-indigo-900">Admin General</td>
+                    <td class="p-2 border border-gray-200 text-gray-700">Administrador de la Plataforma</td>
+                    <td class="p-2 border border-gray-200 font-mono text-gray-600">0202382636</td>
+                    <td class="p-2 border border-gray-200 text-center text-gray-400 italic">Restringido</td>
+                </tr>`;
+            admins.forEach(a => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-2 border border-gray-200 text-cyan-800 font-semibold">Co-Administrador</td>
+                        <td class="p-2 border border-gray-200">${a.nombre}</td>
+                        <td class="p-2 border border-gray-200 font-mono">${a.usuario}</td>
+                        <td class="p-2 border border-gray-200 text-center">
+                            <button onclick="eliminarAdminAdicional('${a.id}')" class="text-red-600 hover:text-red-800 font-bold text-xs">Revocar</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function renderizarEstudiantesAdmin(estudiantes) {
+            const tbody = document.getElementById("nominaEstudiantesAdmin");
+            tbody.innerHTML = "";
+            if (estudiantes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No hay alumnos matriculados en la red distribuida.</td></tr>`;
+                return;
+            }
+            estudiantes.forEach(est => {
+                const areas = (est.areasPermitidas || []).join(', ') || "Ninguna";
+                const cursos = (est.cursosAsignados || []).join(' | ') || "Ninguno";
+                const badgeClave = est.requiereCambioPassword 
+                    ? `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Temporal</span>`
+                    : `<span class="bg-green-100 text-green-800 px-2 py-0.5 rounded text-[10px] font-bold">Establecida</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-2 border border-gray-200 font-mono font-medium">${est.id}</td>
+                        <td class="p-2 border border-gray-200 font-bold text-indigo-950">${est.nombre}</td>
+                        <td class="p-2 border border-gray-200 text-gray-600">${areas}</td>
+                        <td class="p-2 border border-gray-200 text-[10px] text-gray-500 max-w-xs truncate" title="${cursos}">${cursos}</td>
+                        <td class="p-2 border border-gray-200 text-center">${badgeClave}</td>
+                        <td class="p-2 border border-gray-200 text-center">
+                            <button onclick="eliminarEstudiante('${est.id}')" class="text-red-600 hover:text-red-800 font-bold">Eliminar</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function renderizarDocentesAdmin(docentes, evaluaciones) {
+            const tbody = document.getElementById("tablaAdminDocentes");
+            tbody.innerHTML = "";
+
+            if (docentes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="12" class="p-6 text-center text-gray-400">Ningún docente cargado en el distributivo actual.</td></tr>`;
+                return;
+            }
+
+            docentes.forEach(doc => {
+                const evalsDelDocente = evaluaciones.filter(ev => ev.idDocenteUnico === doc.id);
+                const numeroEvaluadores = evalsDelDocente.length;
+
+                let promedioPorcentualTotal = 0;
+                let notaFinalTotal = 0;
+
+                if (numeroEvaluadores > 0) {
+                    let sumaPuntajes = 0;
+                    evalsDelDocente.forEach(ev => {
+                        const sumaRespuestas = ev.respuestas.reduce((acc, val) => acc + val, 0);
+                        sumaPuntajes += sumaRespuestas;
+                    });
+                    const maximoPosible = numeroEvaluadores * 8 * 5;
+                    promedioPorcentualTotal = ((sumaPuntajes / maximoPosible) * 100).toFixed(1);
+                    notaFinalTotal = ((sumaPuntajes / (numeroEvaluadores * 8 * 5)) * 7).toFixed(2);
+                }
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3 text-center border-b border-gray-200">
+                            <input type="checkbox" value="${doc.id}" class="check-docente-fila w-4 h-4 text-indigo-600 rounded cursor-pointer">
+                        </td>
+                        <td class="p-3 text-[11px] font-bold text-gray-600 border-b border-gray-200">${doc.area}</td>
+                        <td class="p-3 text-[11px] font-mono text-gray-500 border-b border-gray-200">${doc.cedula}</td>
+                        <td class="p-3 text-[11px] text-gray-700 border-b border-gray-200">${doc.grado}</td>
+                        <td class="p-3 text-xs font-bold text-indigo-950 border-b border-gray-200">${doc.nombre}</td>
+                        <td class="p-3 text-[11px] text-gray-500 border-b border-gray-200">${doc.curso}</td>
+                        <td class="p-3 text-[11px] font-medium text-indigo-950 border-b border-gray-200">${doc.asignatura}</td>
+                        <td class="p-3 text-center font-bold text-xs border-b border-gray-200">${doc.paralelo}</td>
+                        <td class="p-3 text-center font-semibold bg-indigo-50 text-indigo-900 text-xs border-b border-gray-200">${numeroEvaluadores}</td>
+                        <td class="p-3 text-center font-bold bg-amber-50 text-indigo-950 text-xs border-b border-gray-200">${numeroEvaluadores > 0 ? promedioPorcentualTotal + '%' : '0.0%'}</td>
+                        <td class="p-3 text-center font-bold bg-green-50 text-green-700 text-xs border-b border-gray-200">${numeroEvaluadores > 0 ? notaFinalTotal : '0.00'}</td>
+                        <td class="p-3 text-center border-b border-gray-200">
+                            <button onclick="eliminarDocente('${doc.id}')" class="bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold py-1 px-2.5 rounded shadow transition">Eliminar</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        window.seleccionarTodosDocentes = function(checked) {
+            document.querySelectorAll('.check-docente-fila').forEach(cb => cb.checked = checked);
+        }
+
+        window.cerrarSesionEstudiante = function() {
+            estudianteSesionActiva = null;
+            document.getElementById("loginEstuCedula").value = "";
+            document.getElementById("loginEstuPassword").value = "";
+            mostrarSeccion('vista-login-estudiante');
+        }
+
+        window.cerrarSesionAdmin = function() {
+            isAdminAutenticado = false;
+            document.getElementById("roleSelector").value = "estudiante";
+            mostrarSeccion('vista-login-estudiante');
+        }
+
+        window.descargarExcelCSV = async function() {
+            const snapDoc = await getDocs(collection(db, "docentes"));
+            const snapEv = await getDocs(collection(db, "evaluaciones"));
+            
+            const docentes = [];
+            snapDoc.forEach(d => docentes.push({ id: d.id, ...d.data() }));
+            const evaluaciones = [];
+            snapEv.forEach(e => evaluaciones.push(e.data()));
+
+            let csvContent = "\uFEFF"; 
+            csvContent += "Área;Cédula Docente;Grado;Docente;Curso / Promoción;Asignatura;Paralelo;N° Evaluadores;Promedio %;Nota Final (/7)\n";
+
+            docentes.forEach(doc => {
+                const evalsDelDocente = evaluaciones.filter(ev => ev.idDocenteUnico === doc.id);
+                const numeroEvaluadores = evalsDelDocente.length;
+
+                let promedioPorcentualTotal = "0.0%";
+                let notaFinalTotal = "0.00";
+
+                if (numeroEvaluadores > 0) {
+                    let sumaPuntajes = 0;
+                    evalsDelDocente.forEach(ev => {
+                        sumaPuntajes += ev.respuestas.reduce((acc, val) => acc + val, 0);
+                    });
+                    promedioPorcentualTotal = ((sumaPuntajes / (numeroEvaluadores * 8 * 5)) * 100).toFixed(1) + "%";
+                    notaFinalTotal = ((sumaPuntajes / (numeroEvaluadores * 8 * 5)) * 7).toFixed(2);
+                }
+
+                csvContent += `"${doc.area}";"${doc.cedula}";"${doc.grado}";"${doc.nombre}";"${doc.curso}";"${doc.asignatura}";"${doc.paralelo}";${numeroEvaluadores};"${promedioPorcentualTotal}";"${notaFinalTotal}"\n`;
             });
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.setAttribute("href", url);
-            link.setAttribute("download", `Reporte_Evaluaciones_Global_${Date.now()}.csv`);
+            link.setAttribute("download", `Reporte_Evaluacion_Docente_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // ==================== REFRESCO DINÁMICO DE INTERFACES ====================
-        function actualizarVistas() {
-            const poolsCursos = JSON.parse(localStorage.getItem('cursos'));
-            
-            // 1. Selector de Cursos para Carga de Docentes
-            const selectAdminDoc = document.getElementById("newDocenteCurso");
-            const selectedDoc = selectAdminDoc.value;
-            selectAdminDoc.innerHTML = '';
-            poolsCursos.forEach(c => {
-                selectAdminDoc.innerHTML += `<option value="${c}">${c}</option>`;
-            });
-            if(poolsCursos.includes(selectedDoc)) selectAdminDoc.value = selectedDoc;
-
-            // 2. Renderizar Checkboxes para Matrícula Múltiple de Cursos
-            const contenedorCheckboxes = document.getElementById("contenedorCheckboxesCursosAdmin");
-            contenedorCheckboxes.innerHTML = "";
-            if (poolsCursos.length > 0) {
-                poolsCursos.forEach((c) => {
-                    contenedorCheckboxes.innerHTML += `
-                        <label class="flex items-center gap-2 bg-white p-1.5 rounded border border-gray-200 cursor-pointer hover:bg-gray-100">
-                            <input type="checkbox" value="${c}" class="check-curso-matricula w-3.5 h-3.5 text-indigo-600 rounded">
-                            <span class="truncate font-medium text-slate-700">${c}</span>
-                        </label>
-                    `;
-                });
-            } else {
-                contenedorCheckboxes.innerHTML = `<span class="text-red-500 font-bold">No hay cursos registrados.</span>`;
-            }
-
-            // 3. Renderizar Lista de Cursos Lateral
-            const listaAdmin = document.getElementById("listaCursosAdmin");
-            listaAdmin.innerHTML = '';
-            poolsCursos.forEach(c => {
-                listaAdmin.innerHTML += `
-                    <li class="flex justify-between items-center p-2 hover:bg-gray-50">
-                        <span class="truncate pr-2">${c}</span>
-                        <button onclick="eliminarCurso('${c}')" class="text-red-500 hover:text-red-700 font-bold text-xs px-1">✕</button>
-                    </li>`;
-            });
-
-            // 4. Renderizar Cuentas Administrativas
-            const credsMaestras = JSON.parse(localStorage.getItem('adminCredenciales'));
-            const adminsAdicionales = JSON.parse(localStorage.getItem('adminsAdicionales'));
-            const tablaCuentasAdmin = document.getElementById("tablaAdminCuentas");
-            tablaCuentasAdmin.innerHTML = `
-                <tr class="bg-indigo-50 font-medium">
-                    <td class="p-2 border border-gray-100 text-indigo-900 font-bold">⭐ Cuenta Principal</td>
-                    <td class="p-2 border border-gray-100 font-bold text-gray-800">Administrador Maestro</td>
-                    <td class="p-2 border border-gray-100 font-mono text-indigo-950 font-bold">${credsMaestras.usuario}</td>
-                    <td class="p-2 border border-gray-100 text-center text-xs text-gray-400 italic">No es posible remover</td>
-                </tr>
-            `;
-            adminsAdicionales.forEach(a => {
-                tablaCuentasAdmin.innerHTML += `
-                    <tr class="hover:bg-gray-50">
-                        <td class="p-2 border border-gray-100 text-cyan-800 font-semibold">👤 Co-Administrador</td>
-                        <td class="p-2 border border-gray-100 text-gray-700">${a.nombre}</td>
-                        <td class="p-2 border border-gray-100 font-mono text-gray-800">${a.usuario}</td>
-                        <td class="p-2 border border-gray-100 text-center">
-                            <button onclick="removerAdminAdicional('${a.id}')" class="text-red-600 hover:text-red-800 font-bold">Revocar</button>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            // 5. Renderizar Nómina de Alumnos Matriculados (Multi-Cursos y Áreas Autorizadas)
-            const estudiantes = JSON.parse(localStorage.getItem('estudiantes'));
-            const cuerpoEstudiantes = document.getElementById("nominaEstudiantesAdmin");
-            cuerpoEstudiantes.innerHTML = "";
-            if (estudiantes.length > 0) {
-                estudiantes.forEach(e => {
-                    // Formatear Áreas Autorizadas
-                    const badgeAreas = e.areasPermitidas && e.areasPermitidas.length > 0
-                        ? e.areasPermitidas.map(a => `<span class="inline-block bg-teal-100 text-teal-900 border border-teal-300 px-2 py-0.5 rounded text-[10px] font-bold mr-1">${a}</span>`).join('')
-                        : `<span class="text-red-500 italic">Sin áreas</span>`;
-
-                    // Formatear Cursos Asignados
-                    const badgeCursos = e.cursos && e.cursos.length > 0 
-                        ? e.cursos.map(c => `<span class="inline-block bg-slate-200 text-slate-800 px-2 py-0.5 rounded text-[10px] font-semibold mr-1 mb-1 shadow-sm border border-slate-300">${c}</span>`).join('')
-                        : `<span class="text-red-500 italic">Sin cursos</span>`;
-
-                    cuerpoEstudiantes.innerHTML += `
-                        <tr class="hover:bg-gray-50">
-                            <td class="p-2 border border-gray-100 font-mono font-bold">${e.cedula}</td>
-                            <td class="p-2 border border-gray-100 font-medium">${e.nombre}</td>
-                            <td class="p-2 border border-gray-100">${badgeAreas}</td>
-                            <td class="p-2 border border-gray-100 max-w-[220px]">${badgeCursos}</td>
-                            <td class="p-2 border border-gray-100 text-center">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${e.esTemporal ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'}">
-                                    ${e.esTemporal ? 'Temporal (Sin cambiar)' : 'Actualizada'}
-                                </span>
-                            </td>
-                            <td class="p-2 border border-gray-100 text-center">
-                                <button onclick="desmatricularEstudiante('${e.cedula}')" class="text-red-600 hover:text-red-800 font-bold">Quitar</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } else {
-                cuerpoEstudiantes.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No hay estudiantes cargados en el sistema.</td></tr>`;
-            }
-
-            // 6. Renderizar Calificaciones y Docentes
-            const listaDocentes = JSON.parse(localStorage.getItem('docentes'));
-            const evals = JSON.parse(localStorage.getItem('evaluaciones'));
-            const tablaAdmin = document.getElementById("tablaAdminDocentes");
-            tablaAdmin.innerHTML = "";
-
-            if(listaDocentes.length > 0) {
-                listaDocentes.forEach(doc => {
-                    const evalsDocente = evals.filter(e => e.docenteId === doc.id);
-                    const numeroEvaluadores = evalsDocente.length;
-
-                    let promedioPorcentualTotal = 0;
-                    let notaFinalTotal = 0;
-
-                    if (numeroEvaluadores > 0) {
-                        const sumaPromedios = evalsDocente.reduce((acc, curr) => acc + parseFloat(curr.promedio), 0);
-                        const sumaNotas = evalsDocente.reduce((acc, curr) => acc + parseFloat(curr.nota), 0);
-                        
-                        promedioPorcentualTotal = (sumaPromedios / numeroEvaluadores).toFixed(1);
-                        notaFinalTotal = (sumaNotas / numeroEvaluadores).toFixed(2);
-                    }
-
-                    tablaAdmin.innerHTML += `
-                        <tr class="hover:bg-gray-50 border-b border-gray-200">
-                            <td class="p-3 text-center">
-                                <input type="checkbox" value="${doc.id}" class="check-docente-item w-4 h-4 text-indigo-600 rounded focus:ring-0 cursor-pointer">
-                            </td>
-                            <td class="p-3 font-semibold text-indigo-900 text-xs">${doc.area || 'Subdirección'}</td>
-                            <td class="p-3 font-mono text-xs">${doc.cedula}</td>
-                            <td class="p-3 text-xs">${doc.grado}</td>
-                            <td class="p-3 font-medium text-gray-900 text-xs">${doc.nombre}</td>
-                            <td class="p-3 text-[11px] text-gray-500">${doc.curso}</td>
-                            <td class="p-3 text-[11px] font-medium text-indigo-950">${doc.asignatura}</td>
-                            <td class="p-3 text-center font-bold text-xs">${doc.paralelo}</td>
-                            
-                            <td class="p-3 text-center font-semibold bg-indigo-50 text-indigo-900 text-xs">${numeroEvaluadores}</td>
-                            <td class="p-3 text-center font-bold bg-amber-50 text-indigo-950 text-xs">${numeroEvaluadores > 0 ? promedioPorcentualTotal + '%' : '0.0%'}</td>
-                            <td class="p-3 text-center font-bold bg-green-50 text-green-700 text-xs">${numeroEvaluadores > 0 ? notaFinalTotal : '0.00'}</td>
-                            
-                            <td class="p-3 text-center">
-                                <button onclick="eliminarDocente(${doc.id})" class="bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold py-1 px-2.5 rounded shadow transition">
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>`;
-                });
-            } else {
-                tablaAdmin.innerHTML = `<tr><td colspan="12" class="p-6 text-center text-gray-400">No hay registros en la base de datos general.</td></tr>`;
-            }
-        }
+        // Ejecución de flujos iniciales al cargar DOM
+        document.addEventListener("DOMContentLoaded", async () => {
+            await garantizarEstructurasBase();
+            activarListenersRealtime();
+        });
     </script>
 </body>
 </html>
