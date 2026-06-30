@@ -534,7 +534,7 @@
             }
         }
 
-        // ================= SUSHUCRIPCIONES EN TIEMPO REAL (FIRESTORE LISTENERS) =================
+        // ================= SUSCRIPCIONES EN TIEMPO REAL (FIRESTORE LISTENERS) =================
         function activarListenersRealtime() {
             // Escuchar Cursos
             onSnapshot(collection(db, "cursos"), (snapshot) => {
@@ -723,7 +723,7 @@
         }
 
         async function cargarInputsCredencialesAdmin() {
-            const creds = (await getDoc(doc(db, "configuracion", "adminCredentials"))).data() || { usuario: "0202382636" };
+            const creds = (await getDoc(doc(db, "configuracion", "adminCredenciales"))).data() || { usuario: "0202382636" };
             document.getElementById("nuevoAdminUser").value = creds.usuario || "0202382636";
             document.getElementById("nuevoAdminPass").value = "";
         }
@@ -993,8 +993,8 @@
             cambiarCursoFiltroEstudiante(cursoFiltroEstudianteSeleccionado);
         }
 
-        // ================= RENDERS DE UI CON DATOS DESDE FIRESTORE = function =================
-        function renderizerCursosAdmin(cursos) {
+        // ================= RENDERS DE UI CON DATOS DESDE FIRESTORE =================
+        function renderizarCursosAdmin(cursos) {
             const ul = document.getElementById("listaCursosAdmin");
             ul.innerHTML = "";
             cursos.forEach(c => {
